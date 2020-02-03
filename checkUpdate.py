@@ -9,7 +9,7 @@ import urllib2
 import random
 import time
 
-def getHash(current_hash, url):
+def getHash(url):
     # random integer to select user agent
     randomint = random.randint(0,7)
 
@@ -35,7 +35,9 @@ def getHash(current_hash, url):
 
     return hashlib.sha224(the_page).hexdigest()
 
-    if getHash() == current_hash:
+    
+def check(current_hash, url)
+    if getHash(url) == current_hash:
         return 0
     else:
         return 1
