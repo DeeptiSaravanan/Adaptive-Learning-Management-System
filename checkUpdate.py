@@ -36,7 +36,7 @@ def getHash(url):
     return hashlib.sha224(the_page).hexdigest()
 
     
-def check(current_hash, url)
+def check(current_hash, url):
     if getHash(url) == current_hash:
         return 0
     else:
