@@ -1,4 +1,4 @@
-import numpy
+import numpy 
 import matplotlib.pyplot as plt
 from keras.layers import LSTM
 from sklearn.preprocessing import MinMaxScaler
@@ -12,7 +12,6 @@ from keras.layers import Dense, Activation
 import math
 from keras.optimizers import SGD
 import csv
-
 
 numpy.random.seed(7)
 # load the dataset
@@ -34,9 +33,7 @@ def create_dataset(dataset, look_back=1):
 
 	dataX, dataY = [], []	
 	for i in range(len(dataset)-1):
-		#print(dataset)
 		a = dataset[i:(i+look_back),0]
-		#print(a.shape)
 		dataX.append(a)
 		dataY.append(dataset[i + look_back,0])
 	return numpy.array(dataX), numpy.array(dataY)
@@ -55,18 +52,17 @@ testY = numpy.reshape(testY, (-1,1))
 
 # create and fit the LSTM network
 model = Sequential()
-#model.add(LSTM(4, input_shape=(1, look_back)))
 model.add(LSTM(4, input_shape=(1,look_back)))
 model.add(Dense(1, activation='relu'))
 model.add(Activation('softmax'))
 
-epochs = 100
+epochs = 10
 learning_rate = 0.5
 decay_rate = learning_rate/epochs
 momentum = 0.5
 sgd = SGD(lr=learning_rate,momentum=momentum,decay=decay_rate,nesterov=False)
 model.compile(loss='mean_squared_error', optimizer='sgd')
-model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
+model.fit(trainX, trainY, epochs=10, batch_size=1, verbose=2)
 
 # make predictions
 trainPredict = model.predict(trainX)
@@ -81,65 +77,76 @@ testY = scaler.inverse_transform(testY)
 
 print("Learning rate is:")
 print(testPredict[len(testPredict)-1])
-no_rows = len(list(dataframe))
-print(no_rows)
+no_rows = len(dataset)
+
+f = open('newinput.csv','r')
+r = csv.reader(f) # Check if you can save computation here
+lines = list(r)
+lines[no_rows][4] = testPredict[len(testPredict)-1][0]
+f.close()
+f = open('newinput.csv','w')
+writer = csv.writer(f)
+writer.writerows(lines)
+f.close()
+
+df = pd.DataFrame(columns=['Time','Level','Mode','NewRate'])
+df = pd.read_csv('newinput.csv', engine='python')
+dataset = df.values
+
+X = dataset[:,0:4]
+Y = dataset[:,4]
+
+min_max_scaler = preprocessing.MinMaxScaler()
+X_scale = min_max_scaler.fit_transform(X)
+
+X_train, X_v_test, Y_train, Y_v_test = train_test_split(X_scale, Y, test_size=0.5)
+print("Y_v_test")
+print(Y_v_test)
+X_val, X_test, Y_val, Y_test = train_test_split(X_v_test, Y_v_test, test_size=0.5)
+
+#append_list_as_row('newinput.csv', row_contents)
+
+model = Sequential([
+    Dense(32, activation='relu', input_shape=(4,)),   #changed to (1,) from (4,)
+    Dense(32, activation='relu'),
+    Dense(1, activation='sigmoid'),
+])
+
+model.compile(optimizer='adam',
+              loss='mse',
+              metrics=['accuracy'])
+
+history = model.fit(X_train, Y_train,
+          batch_size=1, epochs=10,
+          validation_data=(X_val, Y_val))
+
+toPredict = X[len(dataset)-1]
+
+toPredict = numpy.reshape(toPredict, (1,4,))
 
 
+Ynew = model.predict(toPredict)
+print(Ynew)
 
 
-file = open("newinput.csv", "wb")
-
-writer = csv.writer(file)
-row = dataframe[no_rows]
-row[3] = testPredict[len(testPredict)-1]
-
-writer.writerow(row)
-
-out_file.close()
-
+f = open('newinput.csv','r')
+r = csv.reader(f) # Check if you can save computation here
+lines = list(r)
+lines[no_rows][5] = Ynew[0][0]
+f.close()
+f = open('newinput.csv','w')
+writer = csv.writer(f)
+writer.writerows(lines)
+f.close()
 
 # print("Enter the new set of parameters")
 # Time = input()
 # Level = input()
 # Mode = input()
-# LearningRate = input()
+# Rate = Ynew
 
-# df = pd.read_csv('ann.csv')
-# dataset = df.values
 
-# X = dataset[:,0:4]
-# Y = dataset[:,4]
 
-# min_max_scaler = preprocessing.MinMaxScaler()
-# X_scale = min_max_scaler.fit_transform(X)
-
-# X_train, X_v_test, Y_train, Y_v_test = train_test_split(X_scale, Y, test_size=0.5)
-# X_val, X_test, Y_val, Y_test = train_test_split(X_v_test, Y_v_test, test_size=0.5)
-
-# row_contents = [Time, Level, Mode, LearningRate]
-# X_test = X_test.append(Y_test)
-# Y_test = row_contents
-
-# append_list_as_row('ann.csv', row_contents)
-
-# model = Sequential([
-#     Dense(32, activation='relu', input_shape=(4,)),
-#     Dense(32, activation='relu'),
-#     Dense(1, activation='sigmoid'),
-# ])
-
-# model.compile(optimizer='adam',
-#               loss='mse',
-#               metrics=['accuracy'])
-
-# history = model.fit(X_train, Y_train,
-#           batch_size=1, epochs=10,
-#           validation_data=(X_val, Y_val))
-
-# Ynew = model.predict(Y_test)
-
-# print(Y_test)
-# print(Ynew)
 # acc = model.evaluate(X_test, Y_test)[1]
 # print(acc)
 
