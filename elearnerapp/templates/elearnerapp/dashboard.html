@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Home</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Mamba - v2.0.1
+  * Template URL: https://bootstrapmade.com/mamba-one-page-bootstrap-template-free/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="index.html"><span>Chiron</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="{% static 'img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="#header">Home <i class="la la-angle-down"></i></a></li>
+          <li class="drop-down"><a href="">Courses</a>
+            <ul>
+              <li class="drop-down"><a href="#">Basics of Management</a>
+                <ul>
+                  <li><a href="#">Introduction</a></li>
+                  <li><a href="#">Planning</a></li>
+                  <li><a href="#">Organisation</a></li>
+                  <li><a href="#">Directing</a></li>
+                  <li><a href="#">Controlling</a></li>
+                </ul>
+              </li>
+              <li class="drop-down"><a href="#">Marketing Management</a>
+                <ul>
+                  <li><a href="#">Introduction to Marketing</a></li>
+                  <li><a href="#">Marketing Strategy</a></li>
+                  <li><a href="#">Marketing Mix Decisions</a></li>
+                  <li><a href="#">Buyer Behaviour</a></li>
+                  <li><a href="#">Marketing Research and Trends in Marketing</a></li>
+                </ul>
+              </li>
+              <li class="drop-down"><a href="#">Human Resource Management</a>
+                <ul>
+                  <li><a href="#">Perspectives</a></li>
+                  <li><a href="#">BestFit</a></li>
+                  <li><a href="#">Training</a></li>
+                  <li><a href="#">EmpInterest</a></li>
+                  <li><a href="#">Evaluation</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#contact">Logout</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Counts Section ======= -->
+  <section class="counts section-bg">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up">
+          <div class="count-box">
+            <i class="icofont-simple-smile" style="color: #20b38e;"></i>
+            <span data-toggle="counter-up">232</span>
+            <p>Happy Clients</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="count-box">
+            <i class="icofont-document-folder" style="color: #c042ff;"></i>
+            <span data-toggle="counter-up">521</span>
+            <p>Projects</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="400">
+          <div class="count-box">
+            <i class="icofont-live-support" style="color: #46d1ff;"></i>
+            <span data-toggle="counter-up">1,463</span>
+            <p>Hours Of Support</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
+          <div class="count-box">
+            <i class="icofont-users-alt-5" style="color: #ffb459;"></i>
+            <span data-toggle="counter-up">15</span>
+            <p>Hard Workers</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Counts Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
+      <div class="section-title">
+        <h2>Diagnostic Test - Basics of Management</h2>
+        <p class="descriptison">Duration : 30 mins</p>
+        <p id="time"></p>
+
+      </div>
+
+
+      <div class="row">
+      	<form action="#" method="get" accept-charset="utf-8">
+      	{% for qno,item in q.items %}
+        {% for id, value in item.items %}
+          {% if id == 'Question' %}
+            <p class="descriptison">{{ qno }}) {{ value }}</p>
+          {% else %}
+            <div class="radios">
+            {% if id == 'Option1' %}
+              <label class="label_radio" for="radio-01">
+                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />A) {{ value }}</label>
+            {% elif id == 'Option2' %}
+              <label class="label_radio" for="radio-01">
+                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />B) {{ value }}</label>
+            {% elif id == 'Option3' %}
+              <label class="label_radio" for="radio-01">
+                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />C) {{ value }}</label>
+            {% elif id == 'Option4' %}
+              <label class="label_radio" for="radio-01">
+                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />D) {{ value }}</label>
+                </div>
+          {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        <div class="btn-group btn-group-justified">
+        <button type="submit" class="btn btn-danger">Finish</button>
+        </div>
+<!--         <input type='submit' value='Finish Test'/> -->
+      	</form>
+      </div>
+        
+      </div>
+
+    </div>
+  </section><!-- End Services Section -->
+	<!-- password-script -->
+	<script type="text/javascript">
+		window.onload = function () {
+			document.getElementById("password1").onchange = validatePassword;
+			document.getElementById("password2").onchange = validatePassword;
+		}
+
+		function validatePassword() {
+			var pass2 = document.getElementById("password2").value;
+			var pass1 = document.getElementById("password1").value;
+			if (pass1 != pass2)
+				document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+			else
+				document.getElementById("password2").setCustomValidity('');
+			//empty string means no validation error
+		}
+	</script>
+
+  <!-- Display the countdown timer in an element -->
+
+  <script>
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var N_Minutes = 60 * 30,
+        display = document.querySelector('#time');
+    startTimer(N_Minutes, display);
+};  </script>
+
+	<!-- Vendor JS Files -->
+	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+	<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+	<script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+	<script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+	<script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+	<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+	<!-- Template Main JS File -->
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
