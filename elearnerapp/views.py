@@ -32,11 +32,22 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def dashboard(request):
-    df=pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\elearner\\elearnerapp\\Diagnostic.csv")
-    q= df.set_index('Index').T.to_dict('dict')
+    # df=pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\elearner\\elearnerapp\\Diagnostic.csv")
+    # q= df.set_index('Index').T.to_dict('dict')
+    q=Question.objects.all()
     return render(request, 'elearnerapp/dashboard.html', {'q':q})
         # ,'s':s_json,'a':a_json,'b':b_json,'c':c_json,'d':d_json})
 
+# def evaluate(request,question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     selected_choice = request.POST['sample-radio']
+    
+#     selected_choice.votes += 1
+#     selected_choice.save()
+       
+        
+       
+            
 def pagelogin(request):
   
     uservalue=''
