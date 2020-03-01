@@ -140,41 +140,27 @@
         <p id="time"></p>
 
       </div>
-
-
       <div class="row">
-      	<form action="#" method="get" accept-charset="utf-8">
-      	{% for qno,item in q.items %}
-        {% for id, value in item.items %}
-          {% if id == 'Question' %}
-            <p class="descriptison">{{ qno }}) {{ value }}</p>
-          {% else %}
+        {% for ques in q %}
+        <p class="descriptison">{{ ques.q_text }}</p>
+      	<form action="{% url 'elearnerapp:answer' ques.id %}" method="post" accept-charset="utf-8">
             <div class="radios">
-            {% if id == 'Option1' %}
               <label class="label_radio" for="radio-01">
-                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />A) {{ value }}</label>
-            {% elif id == 'Option2' %}
+                  <input name="sample-radio" id="A" value="1" type="radio" checked />A) {{ ques.option_a }}</label>
               <label class="label_radio" for="radio-01">
-                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />B) {{ value }}</label>
-            {% elif id == 'Option3' %}
+                  <input name="sample-radio" id="B" value="2" type="radio" checked />B) {{ ques.option_b }}</label>
               <label class="label_radio" for="radio-01">
-                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />C) {{ value }}</label>
-            {% elif id == 'Option4' %}
+                  <input name="sample-radio" id="C" value="3" type="radio" checked />C) {{ ques.option_c }}</label>
               <label class="label_radio" for="radio-01">
-                  <input name="sample-radio" id="radio-01" value="1" type="radio" checked />D) {{ value }}</label>
-                </div>
-          {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% endfor %}
-
-        <div class="btn-group btn-group-justified">
-        <button type="submit" class="btn btn-danger">Finish</button>
-        </div>
-<!--         <input type='submit' value='Finish Test'/> -->
+                  <input name="sample-radio" id="D" value="4" type="radio" checked />D) {{ ques.option_d }}</label>
+            </div>
+            <input type="submit" value="UserAnswer">
       	</form>
+        {% endfor %}
       </div>
-        
+      <div class="btn-group btn-group-justified">
+      <button type="submit" value="answer" class="btn btn-danger">Finish</button>
+      </div> 
       </div>
 
     </div>
