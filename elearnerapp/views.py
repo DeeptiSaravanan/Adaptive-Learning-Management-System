@@ -26,27 +26,47 @@ from .forms import *
 from .models import *
 import json
 from django.template.defaulttags import register
+from django.forms import formset_factory
+
 # Create your views here.
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-def dashboard(request):
-    # df=pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\elearner\\elearnerapp\\Diagnostic.csv")
-    # q= df.set_index('Index').T.to_dict('dict')
-    q=Question.objects.all()
-    return render(request, 'elearnerapp/dashboard.html', {'q':q})
-        # ,'s':s_json,'a':a_json,'b':b_json,'c':c_json,'d':d_json})
+def diagnostic(request,questionnaire_id):
+    questionnaire=get_object_or_404(Questionnaire,pk=questionnaire_id)
+    if request.method == "POST":
+        form = Answerform(questionnaire.question_set.all(),request.POST)
+        print("post")
+        if form.is_valid(): ## Will only ensure the option exists, not correctness.
+            print("form valid")
+            results=[]
+            questionSet=questionnaire.question_set.all()
+            for question in questionSet:
+                if question.pk > 3:
+                    break
+                question_num = "question_%d" % question.pk
+                correct_ans=question.correct
+                user_ans=form.cleaned_data[question_num]
+                if correct_ans==user_ans:
+                    is_correct=True
+                else:
+                    is_correct=False
+                temp=UserAnswer(ques=question,answer=user_ans,is_correct=is_correct)
+                temp.save()
+                results.append(temp)
+                print(results)
+            return render(request,'elearnerapp/result.html',{"results": results})
+    else:
+        print("get")
+        form=Answerform(questions=questionnaire.question_set.all())
+    return render(request,'elearnerapp/diagnostic.html', {"form": form})
 
-# def evaluate(request,question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     selected_choice = request.POST['sample-radio']
-    
-#     selected_choice.votes += 1
-#     selected_choice.save()
-       
         
-       
+def dashboard(request,username):
+    # user_obj=get_object_or_404(User,username=username)
+    return render(request,'elearnerapp/dashboard.html', {"username": username})
+
             
 def pagelogin(request):
   
@@ -57,7 +77,7 @@ def pagelogin(request):
     if form.is_valid():
         uservalue= form.cleaned_data.get("username")
         passwordvalue= form.cleaned_data.get("password")
-
+        # user_obj=User.objects.get(username=uservalue)
         user= authenticate(username=uservalue, password=passwordvalue)
         if user is not None:
             login(request, user)
@@ -66,9 +86,7 @@ def pagelogin(request):
 
             messages.success(request, "You have successfully logged in")
 
-            return HttpResponseRedirect('/elearner/dashboard')
-
-            # return HttpResponseRedirect('/dashboard/'+uservalue+'/')
+            return HttpResponseRedirect('/elearner/'+uservalue+'/dashboard')
 
         else:
             context= {'form': form,
