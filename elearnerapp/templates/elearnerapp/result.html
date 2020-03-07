@@ -135,9 +135,19 @@
     <div class="container">
       <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
       <div class="section-title">
-        <h2>Dahsboard</h2>
-        <p class="descriptison">Hello {{ username }}</p>
+        <h2>Diagnostic Test Results- Basics of Management</h2>
 
+      </div>
+      <div class="row">
+      	{% for result in results %}
+      	<p class="descriptison">{{ result.ques.q_text }}</p>
+      	<p class="descriptison">A) {{ result.ques.option_a }}</p>
+      	<p class="descriptison">B) {{ result.ques.option_b }}</p>
+      	<p class="descriptison">c) {{ result.ques.option_c }}</p>
+      	<p class="descriptison">D) {{ result.ques.option_d }}</p>
+		<p class="descriptison">{{ result.answer }}</p>
+      	<p class="descriptison">{{ result.is_correct }}</p>
+      	{% endfor %}
       </div>
       </div>
 
@@ -160,9 +170,6 @@
 			//empty string means no validation error
 		}
 	</script>
-
-  <!-- Display the countdown timer in an element -->
-
 
 	<!-- Vendor JS Files -->
 	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

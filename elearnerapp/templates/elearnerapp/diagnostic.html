@@ -135,9 +135,19 @@
     <div class="container">
       <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
       <div class="section-title">
-        <h2>Dahsboard</h2>
-        <p class="descriptison">Hello {{ username }}</p>
+        <h2>Diagnostic Test - Basics of Management</h2>
+        <p class="descriptison">Duration : 30 mins</p>
+        <p id="time"></p>
 
+      </div>
+      <div class="row">
+        <form method="post"> <!--Removed action-->
+          {% csrf_token %}
+          {{ form }}
+          <div class="btn-group btn-group-justified">
+          <button type="submit" value="answer" class="btn btn-danger">Finish</button>
+          </div> 
+        </form>
       </div>
       </div>
 
@@ -163,6 +173,29 @@
 
   <!-- Display the countdown timer in an element -->
 
+  <script>
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var N_Minutes = 60 * 30,
+        display = document.querySelector('#time');
+    startTimer(N_Minutes, display);
+};  </script>
 
 	<!-- Vendor JS Files -->
 	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
