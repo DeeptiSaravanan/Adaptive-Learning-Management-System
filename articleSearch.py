@@ -46,42 +46,46 @@ def clean_string(text):
 	text=' '.join([word for word in text.split() if word not in stopwords and len(word)>2 and word!='nan'])
 	return text
 
-cleaned = list(map(clean_string,keywords))
-tfidf_vect = TfidfVectorizer()
-vect_model = tfidf_vect.fit_transform(cleaned)
-# print(tfidf_vect.get_feature_names())
-# print(vect_model)
+def Asearch(text):
+	cleaned = list(map(clean_string,keywords))
+	tfidf_vect = TfidfVectorizer()
+	vect_model = tfidf_vect.fit_transform(cleaned)
+	# print(tfidf_vect.get_feature_names())
+	# print(vect_model)
 
-search_string=clean_string("recruitment process")
-search_tfidf=tfidf_vect.transform([search_string])
+	search_string=clean_string(text)
+	search_tfidf=tfidf_vect.transform([search_string])
 
-# print(search_tfidf)
+	# print(search_tfidf)
 
-csim_arr=cosine_similarity(vect_model, search_tfidf)
-csim=csim_arr.tolist()
-sim_dic = dict(zip(links,csim))
-sim_dic_key= dict(zip(keywords,csim))
-# print(sim_dic)
-sorted_sim_dic = sorted(sim_dic.items(), key=operator.itemgetter(1),reverse=True)
-sorted_sim_dic_key = sorted(sim_dic_key.items(), key=operator.itemgetter(1),reverse=True)
-# print(sorted_sim_dic)
+	csim_arr=cosine_similarity(vect_model, search_tfidf)
+	csim=csim_arr.tolist()
+	sim_dic = dict(zip(links,csim))
+	sim_dic_key= dict(zip(keywords,csim))
+	# print(sim_dic)
+	sorted_sim_dic = sorted(sim_dic.items(), key=operator.itemgetter(1),reverse=True)
+	sorted_sim_dic_key = sorted(sim_dic_key.items(), key=operator.itemgetter(1),reverse=True)
+	# print(sorted_sim_dic)
 
-result=[]
-count=1
-for item in sorted_sim_dic:
-	if count>5:
-		break
-	result.append(item)
-	count=count+1
+	result=[]
+	count=1
+	for item in sorted_sim_dic:
+		if count>5:
+			break
+		result.append(item)
+		count=count+1
 
-print([row[0] for row in result])
+	print([row[0] for row in result])
 
-count1=1
-for item in sorted_sim_dic_key:
-	if count1>5:
-		break
-	print(item)
-	count1=count1+1
+	count1=1
+	for item in sorted_sim_dic_key:
+		if count1>5:
+			break
+		print(item)
+		count1=count1+1
+
+
+
 
 # iter=0 
 # for i in cosine_similarity(vect_model, search_tfidf):
