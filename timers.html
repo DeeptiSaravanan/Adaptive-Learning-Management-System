@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <meta charset="utf-8" />
+    
+    <div class="container">
+        <div id="content">
+	    <h3>Stop Watch</h3>
+    	    <div id="stopWatch">0</div>
+   	    <button id="startButton">Start</button>
+    	    <button id="finishButton">Finish</button>
+	</div>
+    </div>
+    
+    <!--Reference to jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+            /*Stop Watch*/
+            var i = 1;
+            $("#startButton").click(function (e) {
+                setInterval(function () {
+                    $("#stopWatch").html(i);
+		    timetaken = i;
+	            //console.log(timetaken);
+                    i++;
+                }, 1000);
+            });
+
+            $("#finishButton").click(function (e) {
+                i = 0;
+	        console.log(timetaken)
+		i = window.clearInterval(i);
+            });
+            /*End*/
+        
+    </script>
+</body>
+</html>
