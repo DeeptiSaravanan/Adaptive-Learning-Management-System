@@ -1,3 +1,5 @@
+import sys
+sys.path.append('C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\elearner\\elearnerapp')
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
@@ -27,13 +29,15 @@ from .models import *
 import json
 from django.template.defaulttags import register
 from django.forms import formset_factory
+from youTubeSearch import Ysearch
+from articleSearch import Asearch
 
 # Create your views here.
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-def diagnostic(request,questionnaire_id):
+def diagnostic(request,username,questionnaire_id):
     questionnaire=get_object_or_404(Questionnaire,pk=questionnaire_id)
     if request.method == "POST":
         form = Answerform(questionnaire.question_set.all(),request.POST)
@@ -41,6 +45,7 @@ def diagnostic(request,questionnaire_id):
         if form.is_valid(): ## Will only ensure the option exists, not correctness.
             print("form valid")
             results=[]
+            score=0
             questionSet=questionnaire.question_set.all()
             for question in questionSet:
                 if question.pk > 3:
@@ -50,22 +55,29 @@ def diagnostic(request,questionnaire_id):
                 user_ans=form.cleaned_data[question_num]
                 if correct_ans==user_ans:
                     is_correct=True
+                    score=score+1
                 else:
                     is_correct=False
                 temp=UserAnswer(ques=question,answer=user_ans,is_correct=is_correct)
-                temp.save()
+                # temp.save()
                 results.append(temp)
-                print(results)
-            return render(request,'elearnerapp/result.html',{"results": results})
+                # print(results)
+            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username})
     else:
         print("get")
         form=Answerform(questions=questionnaire.question_set.all())
-    return render(request,'elearnerapp/diagnostic.html', {"form": form})
+    return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username})
 
         
-def dashboard(request,username):
+def dashboard(request,username,subject,unit):
+
+    book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
+    youtube_data = Ysearch(unit) 
+    article_data = Asearch(unit)
+    print("inside view article data")
+    print(article_data)
     # user_obj=get_object_or_404(User,username=username)
-    return render(request,'elearnerapp/dashboard.html', {"username": username})
+    return render(request,'elearnerapp/dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data})
 
             
 def pagelogin(request):
