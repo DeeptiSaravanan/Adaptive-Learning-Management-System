@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <meta charset="utf-8" />
+    
+	    <h3>Stop Watch</h3>
+    	    <div id="stopWatch">0</div>
+   	    <button id="startButton">Start</button>
+    	    <button id="finishButton">Finish</button>
+    
+    <!--Reference to jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript">
+            /*Stop Watch*/
+            var i = 1;
+            $("#startButton").click(function (e) {
+                setInterval(function () {
+                    $("#stopWatch").html(i);
+		    timetaken = i;
+	            //console.log(timetaken);
+                    i++;
+                }, 1000);
+            });
+
+            $("#finishButton").click(function (e) {
+                i = 0;
+	        //console.log(timetaken) //TIMETAKEN variable has the required time value
+					 // to be written to csv column
+		i = window.clearInterval(i);		
+      
+});
+            /*End of Time Calculation*/
+	    
+// ISSUE: 'require' doesn't run in script as it access the client side. When you run the node js code(see below for next comment line) separately using node it runs coz of server side. We need to use 'requirejs' module instead of 'require' modeule to write the time value from client browser into csv file locally, which keeps showing errors.
+
+//This is the 'requirejs' module configuration.
+requirejs.config({  
+    baseUrl: 'js/lib',
+    paths: {
+        // the left side is the module ID,
+        // the right side is the path to
+        // the jQuery file, relative to baseUrl.
+        // Also, the path should NOT include
+        // the '.js' file extension. This example
+        // is using jQuery 1.9.0 located at
+        // js/lib/jquery-1.9.0.js, relative to
+        // the HTML page.
+        jquery: 'jquery-1.9.0'
+    }
+});
+
+//-----------------------------CORRECT NODE JS CODE!!!!!----------------------------------
+var fs = require('fs');
+var newLine= "\r\n";
+
+let appendThis = [
+    {
+        Time: alert (timetaken),
+        Level: '0',
+	Mode: '0',
+	NewRate: '0',
+	Rate: '0',
+	Output: '0'
+    }
+];
+
+fs.stat('/home/deepti-saravanan/Desktop/FinalProject/newinput.csv', function (err, stat) {
+    if (err == null) {
+
+	function ConvertToCSV(objArray) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
+
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (var index in array[i]) {
+                    if (line != '') line += ','
+
+                    line += array[i][index];
+                }
+
+                str += line + '\r\n';
+            }
+
+            return str;
+        }
+ 
+	var jsonObject = JSON.stringify(appendThis);
+
+            out = ConvertToCSV(jsonObject);
+	    csv = out.toString();	
+
+        fs.appendFile('/home/deepti-saravanan/Desktop/FinalProject/newinput.csv', csv, function (err) {
+            if (err) throw err;
+        });
+    }
+    else {
+        
+        fields= (fields + newLine);
+
+        fs.writeFile('/home/deepti-saravanan/Desktop/new.csv', fields, function (err) {
+            if (err) throw err;
+        });
+    }
+    });
+
+    </script>
+
+</body>
+
+</html>
