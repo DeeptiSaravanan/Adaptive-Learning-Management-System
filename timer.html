@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <meta charset="utf-8" />
+
+    <h3>Stop Watch</h3>
+        <div id="stopWatch">0</div>
+        <button id="startButton">Start</button>
+        <button id="finishButton">Finish</button>
+
+
+    
+    <script>
+    document.getElementById("startButton").addEventListener("click", myTimer);
+    document.getElementById("finishButton").addEventListener("click", myTimerStop);
+    var i = 1
+    var myvar
+    function myTimer() {
+          
+          document.getElementById("stopWatch").innerHTML = i;
+          i = i + 1;
+          myvar = setTimeout(myTimer, 1000);
+    }
+
+    function myTimerStop() {
+        clearTimeout(myvar)
+        document.getElementById("stopWatch").innerHTML = "Total Time taken is " + i + " seconds";
+        FileWriter csvWriter = new FileWriter("Timings.csv");
+        csvWriter.append("\n");
+        csvWriter.append(i);
+    }
+
+    </script>
+    
+    
