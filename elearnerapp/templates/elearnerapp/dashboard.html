@@ -48,7 +48,7 @@
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="#header">Home <i class="la la-angle-down"></i></a></li>
+          <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
           <li class="drop-down"><a href="">Courses</a>
             <ul>
               <li class="drop-down"><a href="#">Basics of Management</a>
@@ -80,7 +80,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="#contact">Logout</a></li>
+          <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -133,16 +133,68 @@
   <!-- ======= Services Section ======= -->
   <section id="about" class="about">
     <div class="container">
-      <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
+      <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
       <div class="section-title">
-        <h2>Dahsboard</h2>
-        <p class="descriptison">Hello {{ username }}</p>
-
+        <h2>Course Material - {{ subject }}</h2>
+<!--         <button type="button" class="btn btn-info btn-lg">BOOKS</button>
+        <button type="button" class="btn btn-info btn-lg">ARTICLES</button>
+        <button type="button" class="btn btn-info btn-lg">VIDEOS</button> -->
       </div>
+      <div class="description">
+      <h3>BOOKS</h3>
+      <!-- {{  books }} -->
+      {% for book in books.itertuples %}
+      <a href={{ book.Link }}>{{ book.Description }}</a>
+      <br>
+      {% endfor %}
+      <div id="stopWatch">0</div>
+      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
+      <button id="finishButton" type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
+      <br>
+      <h3>VIDEOS</h3>
+      {% for link in videos %}
+      <iframe width="420" height="240" src={{ link }}>
+      </iframe>
+      <br>
+      <button type="button" class="btn btn-success btn-sm">Start</button>
+      <button type="button" class="btn btn-danger btn-sm">Finish</button>
+      <br>
+      {% endfor %}
+      <!-- <p>{{ videos }}</p> -->
+      <h3>ARTICLES</h3>
+      {% for key,value in articles.items %}
+      <a href={{ key }}>{{ value }}</a>
+      <br>
+      <button type="button" class="btn btn-success btn-sm">Start</button>
+      <button type="button" class="btn btn-danger btn-sm">Finish</button>
+      <br>
+      {% endfor %}
       </div>
 
     </div>
   </section><!-- End Services Section -->
+      <script>
+              /*Stop Watch*/
+              var i = 1;
+              function CounterStart(){
+                
+                setInterval(function() {
+                  timer=i;
+                  document.getElementById("stopWatch").innerHTML=timer;
+                  i++;
+                },1000);
+                
+              }
+              function CounterEnd(){
+                i=0;
+                final_count=document.getElementById("stopWatch").innerHTML;
+                document.getElementById("stopWatch").innerHTML="finished";
+                i= window.clearInterval(i);
+                console.log(final_count)
+              }
+              /*End*/
+          
+      </script>
 	<!-- password-script -->
 	<script type="text/javascript">
 		window.onload = function () {
@@ -165,6 +217,7 @@
 
 
 	<!-- Vendor JS Files -->
+
 	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 	<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
