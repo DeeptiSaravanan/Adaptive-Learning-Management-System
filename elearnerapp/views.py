@@ -77,7 +77,7 @@ def dashboard(request,username,subject,unit):
     print("inside view article data")
     print(article_data)
     # user_obj=get_object_or_404(User,username=username)
-    return render(request,'elearnerapp/dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data})
+    return render(request,'elearnerapp/dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject})
 
             
 def pagelogin(request):
