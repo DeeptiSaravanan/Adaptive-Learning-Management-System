@@ -175,22 +175,22 @@
   </section><!-- End Services Section -->
       <script>
               /*Stop Watch*/
-              var i = 1;
+              var i=1;
               function CounterStart(){
-                
-                setInterval(function() {
-                  timer=i;
-                  document.getElementById("stopWatch").innerHTML=timer;
-                  i++;
+                interval=setInterval(function() {
+                  $("#stopWatch").html(i);
+                  // timetaken = i;
+              //console.log(timetaken);
+                    i++;
                 },1000);
                 
               }
               function CounterEnd(){
-                i=0;
-                final_count=document.getElementById("stopWatch").innerHTML;
-                document.getElementById("stopWatch").innerHTML="finished";
-                i= window.clearInterval(i);
-                console.log(final_count)
+                  // i = 0;
+          console.log(i)
+          // $("#stopWatch").html(i);
+          window.clearInterval(interval);
+          // $("#stopWatch").html(i);
               }
               /*End*/
           
