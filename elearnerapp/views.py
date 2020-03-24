@@ -31,6 +31,9 @@ from django.template.defaulttags import register
 from django.forms import formset_factory
 from youTubeSearch import Ysearch
 from articleSearch import Asearch
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # Create your views here.
 @register.filter
@@ -68,7 +71,12 @@ def diagnostic(request,username,questionnaire_id):
         form=Answerform(questions=questionnaire.question_set.all())
     return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username})
 
-        
+@csrf_exempt 
+def write_to_csv(request):
+    data=request.POST.get('timer',None)
+    print(data)
+    print("entered the view")
+    return HttpResponse("yay")       
 def dashboard(request,username,subject,unit):
 
     book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
