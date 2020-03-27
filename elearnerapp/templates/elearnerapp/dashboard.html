@@ -11,8 +11,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
@@ -43,7 +43,7 @@
       <div class="logo float-left">
         <h1 class="text-light"><a href="index.html"><span>Chiron</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="{% static 'img/logo.png" alt="" class="img-fluid"></a>-->
+         <!-- <a href="#"><img src="{% static 'img/logo.jpg' %}" alt="" class="img-fluid"></a> -->
       </div>
 
       <nav class="nav-menu float-right d-none d-lg-block">
@@ -53,29 +53,29 @@
             <ul>
               <li class="drop-down"><a href="#">Basics of Management</a>
                 <ul>
-                  <li><a href="#">Introduction</a></li>
-                  <li><a href="#">Planning</a></li>
-                  <li><a href="#">Organisation</a></li>
-                  <li><a href="#">Directing</a></li>
-                  <li><a href="#">Controlling</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Introduction">Introduction</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Planning">Planning</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Organisation">Organisation</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Directing">Directing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Controlling">Controlling</a></li>
                 </ul>
               </li>
               <li class="drop-down"><a href="#">Marketing Management</a>
                 <ul>
-                  <li><a href="#">Introduction to Marketing</a></li>
-                  <li><a href="#">Marketing Strategy</a></li>
-                  <li><a href="#">Marketing Mix Decisions</a></li>
-                  <li><a href="#">Buyer Behaviour</a></li>
-                  <li><a href="#">Marketing Research and Trends in Marketing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Introduction to Marketing">Introduction to Marketing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Strategy">Marketing Strategy</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Mix Decisions">Marketing Mix Decisions</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Buyer Behaviour">Buyer Behaviour</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Research and Trends in Marketing">Marketing Research and Trends in Marketing</a></li>
                 </ul>
               </li>
               <li class="drop-down"><a href="#">Human Resource Management</a>
                 <ul>
-                  <li><a href="#">Perspectives</a></li>
-                  <li><a href="#">BestFit</a></li>
-                  <li><a href="#">Training</a></li>
-                  <li><a href="#">EmpInterest</a></li>
-                  <li><a href="#">Evaluation</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/HR/Perspectives">Perspectives</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/BestFit">BestFit</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Training">Training</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/EmpInterest">EmpInterest</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Evaluation">Evaluation</a></li>
                 </ul>
               </li>
             </ul>
@@ -87,157 +87,265 @@
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Counts Section ======= -->
-  <section class="counts section-bg">
-    <div class="container">
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
 
-      <div class="row">
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
 
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up">
-          <div class="count-box">
-            <i class="icofont-simple-smile" style="color: #20b38e;"></i>
-            <span data-toggle="counter-up">232</span>
-            <p>Happy Clients</p>
+        <div class="carousel-inner" role="listbox">
+
+          <!-- Slide 1 -->
+          <div class="carousel-item active" style="background-image: url('{% static 'img/hero1.jpg' %}');">
+            <div class="carousel-container">
+              <div class="carousel-content container">
+                <h2 class="animated fadeInDown">Welcome to <span>Chiron</span></h2>
+                <p class="animated fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                <a href="#about" class="btn-get-started animated fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
           </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item" style="background-image: url('{% static 'img/hero3.png' %}');">
+            <div class="carousel-container">
+              <div class="carousel-content container">
+                <h2 class="animated fadeInDown">Lorem Ipsum Dolor</h2>
+                <p class="animated fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                <a href="#about" class="btn-get-started animated fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item" style="background-image: url('{% static 'img/hero2.png' %}');">
+            <div class="carousel-container">
+              <div class="carousel-content container">
+                <h2 class="animated fadeInDown">Sequi ea ut et est quaerat</h2>
+                <p class="animated fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                <a href="#about" class="btn-get-started animated fadeInUp scrollto">Read More</a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
-          <div class="count-box">
-            <i class="icofont-document-folder" style="color: #c042ff;"></i>
-            <span data-toggle="counter-up">521</span>
-            <p>Projects</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="400">
-          <div class="count-box">
-            <i class="icofont-live-support" style="color: #46d1ff;"></i>
-            <span data-toggle="counter-up">1,463</span>
-            <p>Hours Of Support</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
-          <div class="count-box">
-            <i class="icofont-users-alt-5" style="color: #ffb459;"></i>
-            <span data-toggle="counter-up">15</span>
-            <p>Hard Workers</p>
-          </div>
-        </div>
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon icofont-rounded-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon icofont-rounded-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
 
       </div>
-
     </div>
-  </section><!-- End Counts Section -->
+  </section><!-- End Hero -->
 
-  <!-- ======= Services Section ======= -->
+  <!-- ======= About Us Section ======= -->
   <section id="about" class="about">
     <div class="container">
-      <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
-      <div class="section-title">
-        <h2>Course Material - {{ subject }}</h2>
-<!--         <button type="button" class="btn btn-info btn-lg">BOOKS</button>
-        <button type="button" class="btn btn-info btn-lg">ARTICLES</button>
-        <button type="button" class="btn btn-info btn-lg">VIDEOS</button> -->
+
+      <div class="row no-gutters">
+        <div class="col-lg-6 video-box">
+          <img src="{% static 'img/video.jpg' %}" class="img-fluid" alt="">
+          <a href="https://www.youtube.com/watch?v=viHILXVY_eU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
+
+          <div class="section-title">
+            <h2>About Us</h2>
+            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p>
+          </div>
+
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="bx bx-fingerprint"></i></div>
+            <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+          </div>
+
+        </div>
       </div>
-      <div class="description">
-      <h3>BOOKS</h3>
-      <!-- {{  books }} -->
-      {% for book in books.itertuples %}
-      <a href={{ book.Link }}>{{ book.Description }}</a>
-      <br>
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart({{ subject }}, {{ mode }});">Start</button>
-      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
-      <br>
-      {% endfor %}
-      <br>
-<!--       <h3>VIDEOS</h3>
-      {% for link in videos %}
-      <iframe width="420" height="240" src={{ link }}>
-      </iframe>
-      <br>
-      <button type="button" class="btn btn-success btn-sm">Start</button>
-      <button type="button" class="btn btn-danger btn-sm">Finish</button>
-      <br>
-      {% endfor %}
-      <h3>ARTICLES</h3>
-      {% for key,value in articles.items %}
-      <a href={{ key }}>{{ value }}</a>
-      <br>
-      <button type="button" class="btn btn-success btn-sm">Start</button>
-      <button type="button" class="btn btn-danger btn-sm">Finish</button>
-      <br>
-      {% endfor %}
-      </div> -->
 
     </div>
-  </section><!-- End Services Section -->
-      <script>
-              /*Stop Watch*/
-              var i=1;
-              function CounterStart(){
-                interval=setInterval(function() {
-                    i++;
-                },1000);
-                
-              }
-              function CounterPause(){
-                console.log(i);
-          window.clearInterval(interval);
-            }
-            function CounterEnd(){
-              $.ajax({
-                type:"POST",
-                url: "{% url 'write_to_csv' %}",
-                data: {
-                  'timer': i
-                },
-                dataType: 'json',
-                success: function (data) {
-                    alert(data);
-                }
-              });
-              /*End*/
-            }
-          
-      </script>
-	<!-- password-script -->
-	<script type="text/javascript">
-		window.onload = function () {
-			document.getElementById("password1").onchange = validatePassword;
-			document.getElementById("password2").onchange = validatePassword;
-		}
+  </section><!-- End About Us Section -->
 
-		function validatePassword() {
-			var pass2 = document.getElementById("password2").value;
-			var pass1 = document.getElementById("password1").value;
-			if (pass1 != pass2)
-				document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-			else
-				document.getElementById("password2").setCustomValidity('');
-			//empty string means no validation error
-		}
-	</script>
+    <!-- ======= Contact Us Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+            <div class="info-box">
+              <i class="bx bx-map"></i>
+              <h3>Our Address</h3>
+              <p>A108 Adam Street, New York, NY 535022</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="info-box">
+              <i class="bx bx-envelope"></i>
+              <h3>Email Us</h3>
+              <p>info@example.com<br>contact@example.com</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <div class="info-box ">
+              <i class="bx bx-phone-call"></i>
+              <h3>Call Us</h3>
+              <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+            </div>
+          </div>
+
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="form-row">
+                <div class="col-lg-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-lg-6 form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                <div class="validate"></div>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                <div class="validate"></div>
+              </div>
+              <div class="mb-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Us Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>Mamba</h3>
+            <p>
+              A108 Adam Street <br>
+              NY 535022, USA<br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Mamba</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/mamba-one-page-bootstrap-template-free/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+  <!-- password-script -->
+  <script type="text/javascript">
+    window.onload = function () {
+      document.getElementById("password1").onchange = validatePassword;
+      document.getElementById("password2").onchange = validatePassword;
+    }
+
+    function validatePassword() {
+      var pass2 = document.getElementById("password2").value;
+      var pass1 = document.getElementById("password1").value;
+      if (pass1 != pass2)
+        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+      else
+        document.getElementById("password2").setCustomValidity('');
+      //empty string means no validation error
+    }
+  </script>
 
   <!-- Display the countdown timer in an element -->
 
 
-	<!-- Vendor JS Files -->
+  <!-- Vendor JS Files -->
 
-	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-	<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
-	<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-	<script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
-	<script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
-	<script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
-	<script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
-	<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-	<script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+  <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+  <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
 
-	<!-- Template Main JS File -->
-	<script src="{% static 'js/main.js' %}"></script>
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
