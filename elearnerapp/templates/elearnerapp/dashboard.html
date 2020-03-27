@@ -146,10 +146,11 @@
       {% for book in books.itertuples %}
       <a href={{ book.Link }}>{{ book.Description }}</a>
       <br>
+      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart({{ subject }}, {{ mode }});">Start</button>
+      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
+      <br>
       {% endfor %}
-      <div id="stopWatch">0</div>
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button id="finishButton" type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
       <br>
 <!--       <h3>VIDEOS</h3>
       {% for link in videos %}
@@ -177,32 +178,28 @@
               var i=1;
               function CounterStart(){
                 interval=setInterval(function() {
-                  $("#stopWatch").html(i);
-                  // timetaken = i;
-              //console.log(timetaken);
                     i++;
                 },1000);
                 
               }
-              function CounterEnd(){
-                  // i = 0;
-          console.log(i)
-          // $("#stopWatch").html(i);
+              function CounterPause(){
+                console.log(i);
           window.clearInterval(interval);
-          $.ajax({
-            type:"POST",
-            url: "{% url 'write_to_csv' %}",
-            data: {
-              'timer': i
-            },
-            dataType: 'json',
-            success: function (data) {
-                alert(data);
             }
-          });
-          // $("#stopWatch").html(i);
-              }
+            function CounterEnd(){
+              $.ajax({
+                type:"POST",
+                url: "{% url 'write_to_csv' %}",
+                data: {
+                  'timer': i
+                },
+                dataType: 'json',
+                success: function (data) {
+                    alert(data);
+                }
+              });
               /*End*/
+            }
           
       </script>
 	<!-- password-script -->
