@@ -34,6 +34,39 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>  
+      #boxes{
+      content: "";
+      display: table;
+      clear: both;
+      }
+      #leftbox { 
+                float:left;  
+                background:#ffe6ff; 
+                width:50%; 
+                height:280px; 
+            } 
+            #rightbox{ 
+                float:right; 
+                background:#cce6ff; 
+                width:50%; 
+                height:280px; 
+            } 
+      #column1{ 
+      background-color: #a1edcc; 
+      } 
+      #column2{ 
+      background-color:#a0e9ed; 
+      width:43%; 
+      } 
+      #column3{ 
+      background-color:#f497f1; 
+      } 
+      h2{ 
+      color: #000000; 
+      text-align:center; 
+      } 
+    </style>
 </head>
 
   <!-- ======= Header ======= -->
@@ -146,21 +179,36 @@
       {% for book in books.itertuples %}
       <a href={{ book.Link }}>{{ book.Description }}</a>
       <br>
-      {% endfor %}
-      <div id="stopWatch">0</div>
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button id="finishButton" type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
+      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart({{ subject }}, {{ mode }});">Start</button>
+      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd();">Finish</button>
       <br>
+      <br>
+      <br>
+      {% endfor %}
+      <br>
+      
+      <main id = "boxes">
       <h3>VIDEOS</h3>
-      {% for link in videos %}
+       {% for link in videos %}
+       <div id="leftbox">
+       
       <iframe width="420" height="240" src={{ link }}>
       </iframe>
-      <br>
-      <button type="button" class="btn btn-success btn-sm">Start</button>
+      </div>
+      <div id="rightbox">
+      	<br>
+      	<br>
+      	<br>
+      	<br>
+
+      <button align="center" type="button" class="btn btn-success btn-sm">Start</button>
       <button type="button" class="btn btn-danger btn-sm">Finish</button>
-      <br>
+      </div>
+      
       {% endfor %}
-      <!-- <p>{{ videos }}</p> -->
+      </main>
+
       <h3>ARTICLES</h3>
       {% for key,value in articles.items %}
       <a href={{ key }}>{{ value }}</a>
@@ -173,68 +221,71 @@
 
     </div>
   </section><!-- End Services Section -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script>
               /*Stop Watch*/
-
-              var i = 1;
+              var i=1;
               function CounterStart(){
-                
-                setInterval(function() {
-                  timer=i;
-                  document.getElementById("stopWatch").innerHTML=timer;
-                  i++;
+                interval=setInterval(function() {
+                    i++;
                 },1000);
                 
               }
-              function CounterEnd(){
-                i=0;
-                final_count=document.getElementById("stopWatch").innerHTML;
-                document.getElementById("stopWatch").innerHTML="finished";
-                i= window.clearInterval(i);
-                console.log(final_count)
-                $.post('resourceTime',{timeTaken : final_count, 'csrfmiddlewaretoken': '{{csrf_token}}'})
-                console.log("POST request sent")
-              }
+              function CounterPause(){
+                console.log(i);
+          window.clearInterval(interval);
+            }
+            function CounterEnd(){
+              $.ajax({
+                type:"POST",
+                url: "{% url 'write_to_csv' %}",
+                data: {
+                  'timer': i
+                },
+                dataType: 'json',
+                success: function (data) {
+                    alert(data);
+                }
+              });
               /*End*/
+            }
           
       </script>
-  <!-- password-script -->
-  <script type="text/javascript">
-    window.onload = function () {
-      document.getElementById("password1").onchange = validatePassword;
-      document.getElementById("password2").onchange = validatePassword;
-    }
+	<!-- password-script -->
+	<script type="text/javascript">
+		window.onload = function () {
+			document.getElementById("password1").onchange = validatePassword;
+			document.getElementById("password2").onchange = validatePassword;
+		}
 
-    function validatePassword() {
-      var pass2 = document.getElementById("password2").value;
-      var pass1 = document.getElementById("password1").value;
-      if (pass1 != pass2)
-        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-      else
-        document.getElementById("password2").setCustomValidity('');
-      //empty string means no validation error
-    }
-  </script>
+		function validatePassword() {
+			var pass2 = document.getElementById("password2").value;
+			var pass1 = document.getElementById("password1").value;
+			if (pass1 != pass2)
+				document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+			else
+				document.getElementById("password2").setCustomValidity('');
+			//empty string means no validation error
+		}
+	</script>
 
   <!-- Display the countdown timer in an element -->
 
 
-  <!-- Vendor JS Files -->
+	<!-- Vendor JS Files -->
 
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
-  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-  <script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
-  <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
-  <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
-  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+	<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+	<script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+	<script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+	<script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+	<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'vendor/aos/aos.js' %}"></script>
 
-  <!-- Template Main JS File -->
-  <script src="{% static 'js/main.js' %}"></script>
+	<!-- Template Main JS File -->
+	<script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
