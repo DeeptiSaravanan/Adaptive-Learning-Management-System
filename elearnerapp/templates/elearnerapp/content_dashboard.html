@@ -11,20 +11,21 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="apple-touch-icon">
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -34,6 +35,61 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>  
+      #boxes{
+      content: "";
+      display: table;
+      clear: both;
+      }
+      #leftboxvid { 
+                float:left;  
+                /*background:#ffe6ff; */
+                width:50%; 
+                height:280px; 
+            } 
+            #rightboxvid{ 
+                float:right; 
+                /*background:#cce6ff; */
+                width:50%; 
+                height:280px; 
+            } 
+      #leftbox { 
+                float:left;  
+                /*background:#ffe6ff; */
+                width:50%; 
+                height:60px; 
+            } 
+            #rightbox{ 
+                float:right; 
+                /*background:#cce6ff; */
+                width:50%; 
+                height:60px; 
+            } 
+      #column1{ 
+      background-color: #a1edcc; 
+      } 
+      #column2{ 
+      background-color:#a0e9ed; 
+      width:43%; 
+      } 
+      #column3{ 
+      background-color:#f497f1; 
+      } 
+      h2{ 
+      color: #000000; 
+      text-align:center; 
+      } 
+      #icon-added-book a::before{
+      padding-right: 10px;
+      font-family: "FontAwesome";
+      content: "\f02d";
+    }
+      #icon-added-article a::before{
+      padding-right: 10px;
+      font-family: "FontAwesome";
+      content: "\f044";
+    }
+    </style>
 </head>
 
   <!-- ======= Header ======= -->
@@ -111,37 +167,55 @@
         <button type="button" class="btn btn-info btn-lg">VIDEOS</button> -->
       </div>
       <div class="description">
+      <main id="boxes">
       <h3>BOOKS</h3>
       {% for book in books.itertuples %}
-      <a href={{ book.Link }}>{{ book.Description }}</a>
-      <br>
+      <div id="leftbox">
+        <div id="icon-added-book">
+      <a href={{ book.Link }} style="color:black; font-size: 120%;">{{ book.Description }}</a>
+    </div>
+    </div>
+    <div id="rightbox">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+      <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
-      <br>
+    </div>
       {% endfor %}
       <br>
-<!--       <h3>VIDEOS</h3>
+
+      <h3>VIDEOS</h3>
       {% for link in videos %}
+      <div id="leftboxvid">
       <iframe width="420" height="240" src={{ link }}>
       </iframe>
+    </div>
+    <div id="rightboxvid">
+      <br>
+      <br>
       <br>
       <br>
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,{{ level }});">Finish</button>
       <br>
+    </div>
       {% endfor %}
+
+
       <h3>ARTICLES</h3>
       {% for key,value in articles.items %}
-      <a href={{ key }}>{{ value }}</a>
-      <br>
+      <div id="leftbox">
+      <div id="icon-added-article">
+      <a href={{ key }} style="color:black; font-size: 120%;">{{ value }}</a>
+    </div>
+  </div>
+      <div id="rightbox">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,{{ level }});">Finish</button>
-      <br>
+    </div>
       {% endfor %}
-      </div> -->
+      </div>
 
     </div>
   </section><!-- End Services Section -->
