@@ -71,21 +71,36 @@ def diagnostic(request,username,questionnaire_id):
         form=Answerform(questions=questionnaire.question_set.all())
     return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username})
 
+
 @csrf_exempt 
 def write_to_csv(request):
-    data=request.POST.get('timer',None)
-    print(data)
-    print("entered the view")
-    return HttpResponse("yay")       
-def dashboard(request,username,subject,unit):
+    time=request.POST.get('timer',None)
+    subject=request.POST.get('subject',None)
+    level=request.POST.get('level',None)
+    mode=request.POST.get('mode',None)
+    csv_row=[time,level,mode,0.0,0.0,0.0]
+    fields=['Time','Level','Mode','NewRate','Rate','Output']
+    with open('C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\'+subject+'_NN.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow(csv_row)
+    f.close()
+    return HttpResponse("yay")
 
+def dashboard(request,username):
+    return render(request,'elearnerapp/dashboard.html',{"username":username})
+
+def content(request,username,subject,unit):
+    Dict = {'Easy': ['Introduction','Planning','Perspectives','BestFit','Introduction to Marketing'],'Medium':['Organising', 'Directing', 'Training', 'EmpInterest','Marketing Strategy', 'Marketing Mix Decisions'],'Hard':['Controlling','Evaluation','Buyer Behaviour','Marketing Research and Trends in Marketing']}
+    if(any(unit in x for x in Dict['Easy'])):
+        level=0.2
+    elif(any(unit in x for x in Dict['Medium'])):
+        level=0.5
+    elif(any(unit in x for x in Dict['Hard'])):
+        level=0.9        
     book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
     youtube_data = Ysearch(unit) 
     article_data = Asearch(unit)
-    print("inside view article data")
-    print(article_data)
-    # user_obj=get_object_or_404(User,username=username)
-    return render(request,'elearnerapp/dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject})
+    return render(request,'elearnerapp/content_dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
 
             
 def pagelogin(request):
