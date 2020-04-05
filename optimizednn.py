@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dense, Activation
+from keras.layers import Dense, Activation, BatchNormalization
 import math
 from keras.optimizers import SGD
 from keras.optimizers import Adam
@@ -22,15 +22,15 @@ dataframe = read_csv("MM_Data.csv", usecols=[4], engine='python')
 datasetlist = dataframe.values
 datasetlist = datasetlist.astype('float32')
 #rows, column = datasetlist.shape
-datasets = datasetlist[0:5]
+datasets = datasetlist[0:3]
 
 #load the dataset for ANN
 df = read_csv('MM_Data.csv', usecols=[0,1,2,3,5], engine='python') 
 datasetlist1 = df.values
 datasetlist1 = datasetlist1.astype('float32')
-dataset1 = datasetlist1[0:5,:]
+dataset1 = datasetlist1[0:3,:]
 
-look_back = 3 # Changed lookback to 3 from 1
+look_back = 1 # Changed lookback to 3 from 1
 
 # convert an array of values into a dataset matrix
 def create_dataset(dataset, look_back=1):
@@ -46,6 +46,7 @@ def create_dataset(dataset, look_back=1):
 model = Sequential()
 model.add(LSTM(4, input_shape=(1,look_back)))
 model.add(Dense(1, activation='relu'))
+BatchNormalization(axis=1)  #Added batch normalization
 model.add(Activation('softmax'))
 
 epochs = 100
@@ -68,7 +69,7 @@ model1.compile(optimizer='adam',
         loss='mse',
         metrics=['accuracy'])
 
-iterno=5
+iterno=3
 count = 0
 
 while(iterno < 989):
@@ -100,7 +101,7 @@ while(iterno < 989):
 	trainY = numpy.reshape(trainY, (-1,1))
 	testY = numpy.reshape(testY, (-1,1))
 
-	model.fit(trainX, trainY, epochs=10, batch_size=2, verbose=2) #Changed batch size to 2
+	model.fit(trainX, trainY, epochs=10, batch_size=5, verbose=2) #Changed batch size to 3
 	# make predictions
 	trainPredict = model.predict(trainX)
 	testPredict = model.predict(testX)
@@ -150,10 +151,10 @@ while(iterno < 989):
 	Y = dataset1[0:iterno,4]
 	# print(Y)
 
-	min_max_scaler = preprocessing.MinMaxScaler()
-	X_scale = min_max_scaler.fit_transform(X)
+	# min_max_scaler = preprocessing.MinMaxScaler()
+	# X_scale = min_max_scaler.fit_transform(X)
 
-	X_train, X_v_test, Y_train, Y_v_test = train_test_split(X_scale, Y, test_size=0.5)
+	X_train, X_v_test, Y_train, Y_v_test = train_test_split(X, Y, test_size=0.5) #Changed X_scale to X
 	
 	testingsize = len(X_v_test)
 	X_val,X_test = X_v_test[:testingsize-1],X_v_test[testingsize-1]
@@ -198,7 +199,7 @@ while(iterno < 989):
 	f.close()
 	iterno = iterno+1
 	count = count + 1
-	if count == 2:
+	if count == 50:
 		break
 	
 
