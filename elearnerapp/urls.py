@@ -8,5 +8,5 @@ urlpatterns = [
     path('<str:username>/dashboard',views.dashboard,name='dashboard'),
     path('<str:username>/dashboard/<str:subject>/<str:unit>',views.content,name='content'),
     path('post/ajax/timer/',views.write_to_csv,name='write_to_csv'),
-    path('<str:username>/dashboard/<int:questionnaire_id>/diagnostic/lol', views.diagnostic, name='diagnostic'),
+    path('<str:username>/dashboard/<str:subject>/<str:unit>/diagnostic/<int:questionnaire_id>', views.diagnostic, name='diagnostic'),
 ]
