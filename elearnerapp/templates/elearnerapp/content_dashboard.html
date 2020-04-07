@@ -56,13 +56,13 @@
       #leftbox { 
                 float:left;  
                 /*background:#ffe6ff; */
-                width:50%; 
+                width:75%; 
                 height:60px; 
             } 
             #rightbox{ 
                 float:right; 
                 /*background:#cce6ff; */
-                width:50%; 
+                width:25%; 
                 height:60px; 
             } 
       #column1{ 
@@ -161,29 +161,31 @@
     <div class="container">
       <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
       <div class="section-title">
-        <h2>Course Material - {{ subject }}</h2>
-<!--         <button type="button" class="btn btn-info btn-lg">BOOKS</button>
-        <button type="button" class="btn btn-info btn-lg">ARTICLES</button>
-        <button type="button" class="btn btn-info btn-lg">VIDEOS</button> -->
+        <h2>Course Material - {{ unit }}</h2>
       </div>
       <div class="description">
       <main id="boxes">
-      <h3>BOOKS</h3>
+        <div class="section-title">
+      <h2>BOOKS</h2>
+    </div>
       {% for book in books.itertuples %}
       <div id="leftbox">
         <div id="icon-added-book">
       <a href={{ book.Link }} style="color:black; font-size: 120%;">{{ book.Description }}</a>
     </div>
+    <br>
     </div>
     <div id="rightbox">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
     </div>
+    <br>
       {% endfor %}
       <br>
-
-      <h3>VIDEOS</h3>
+      <div class="section-title">
+      <h2>VIDEOS</h2>
+    </div>
       {% for link in videos %}
       <div id="leftboxvid">
       <iframe width="420" height="240" src={{ link }}>
@@ -201,8 +203,9 @@
     </div>
       {% endfor %}
 
-
-      <h3>ARTICLES</h3>
+      <div class="section-title">
+      <h2>ARTICLES</h2>
+    </div>
       {% for key,value in articles.items %}
       <div id="leftbox">
       <div id="icon-added-article">
@@ -236,6 +239,13 @@
               var subject=subject;
               var mode=mode;
               var level=level;
+              var txt;
+              if (confirm("Would you recommend this to a fellow learner?")) {
+                score = 1;
+              } else {
+                score = -1;
+              }
+              console.log(txt);
               $.ajax({
                 type:"POST",
                 url: "{% url 'write_to_csv' %}",
@@ -243,7 +253,8 @@
                   'timer': i,
                   'subject':subject,
                   'mode':mode,
-                  'level':level
+                  'level':level,
+                  'score':score
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -252,6 +263,7 @@
               });
               /*End*/
             }
+
           
       </script>
 	<!-- password-script -->
