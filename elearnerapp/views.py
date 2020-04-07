@@ -78,6 +78,7 @@ def write_to_csv(request):
     subject=request.POST.get('subject',None)
     level=request.POST.get('level',None)
     mode=request.POST.get('mode',None)
+    score=request.POST.get('score',None) #write to user feedback csv
     csv_row=[time,level,mode,0.0,0.0,0.0]
     fields=['Time','Level','Mode','NewRate','Rate','Output']
     with open('C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\'+subject+'_NN.csv', 'a') as f:
@@ -100,7 +101,13 @@ def content(request,username,subject,unit):
     book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
     youtube_data = Ysearch(unit) 
     article_data = Asearch(unit)
-    return render(request,'elearnerapp/content_dashboard.html', {"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
+    if subject=="BM":
+        full_sub ="Basics of Management"
+    elif subject=="MM":
+        full_sub="Marketing Management"
+    else:
+        full_sub="Human Resource Management"
+    return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
 
             
 def pagelogin(request):
