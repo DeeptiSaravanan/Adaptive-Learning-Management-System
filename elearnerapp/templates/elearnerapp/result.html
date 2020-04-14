@@ -11,10 +11,11 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="icon">
+  <link href="{% static 'img/logo.jpg' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -24,6 +25,7 @@
   <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -34,6 +36,20 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+        #icon-added-right p::after{
+      padding-right: 10px;
+      font-family: "FontAwesome";
+      content: "\f00c";
+      color:green;
+    }
+      #icon-added-wrong p::after{
+      padding-right: 10px;
+      font-family: "FontAwesome";
+      content: "\f00d";
+      color: red;
+    }
+</style>
 </head>
 
   <!-- ======= Header ======= -->
@@ -48,6 +64,7 @@
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
+        <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
           <li class="active"><a href="#header">Home <i class="la la-angle-down"></i></a></li>
           <li class="drop-down"><a href="">Courses</a>
             <ul>
@@ -80,77 +97,56 @@
               </li>
             </ul>
           </li>
-          <li><a href="#contact">Logout</a></li>
+          <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Counts Section ======= -->
-  <section class="counts section-bg">
-    <div class="container">
 
-      <div class="row">
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up">
-          <div class="count-box">
-            <i class="icofont-simple-smile" style="color: #20b38e;"></i>
-            <span data-toggle="counter-up">232</span>
-            <p>Happy Clients</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
-          <div class="count-box">
-            <i class="icofont-document-folder" style="color: #c042ff;"></i>
-            <span data-toggle="counter-up">521</span>
-            <p>Projects</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="400">
-          <div class="count-box">
-            <i class="icofont-live-support" style="color: #46d1ff;"></i>
-            <span data-toggle="counter-up">1,463</span>
-            <p>Hours Of Support</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
-          <div class="count-box">
-            <i class="icofont-users-alt-5" style="color: #ffb459;"></i>
-            <span data-toggle="counter-up">15</span>
-            <p>Hard Workers</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section><!-- End Counts Section -->
-
-  <!-- ======= Services Section ======= -->
+  <!-- ======= Services Section ======= --> 
   <section id="about" class="about">
     <div class="container">
-      <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
+
+      <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
+
       <div class="section-title">
         <h2>Diagnostic Test Results- Basics of Management</h2>
-
+        <div class="media text-center">
+        <h4>Total Score : </h4><h4 class="text-primary">{{ score }}</h4>
       </div>
+      {% if status == "Fail" %}
+        <div class="media text-center">
+        <h4>Status : </h4><h4 class="text-danger">{{ status }}</h4>
+      </div>
+      {% endif %}
+      {% if status == "Pass" %}
+        <div class="media text-center">
+        <h4>Status : </h4><h4 class="text-success">{{ status }}</h4>
+      </div>
+      {% endif %}
+    </div>
+
       <div class="row">
-      	{% for result in results %}
-      	<p class="descriptison">{{ result.ques.q_text }}</p>
-      	<p class="descriptison">A) {{ result.ques.option_a }}</p>
-      	<p class="descriptison">B) {{ result.ques.option_b }}</p>
-      	<p class="descriptison">c) {{ result.ques.option_c }}</p>
-      	<p class="descriptison">D) {{ result.ques.option_d }}</p>
-		<p class="descriptison">{{ result.answer }}</p>
-      	<p class="descriptison">{{ result.is_correct }}</p>
+        <ol>
+      	{% for result in results %}  	
+      	<li><p class="description">{{ result.ques.q_text }}</p></li>
+      	{% if result.is_correct %}
+        <div id="icon-added-right">
+        <p>Answer : {{ result.answer }}</p>
+        </div>
+         
+      {% else %}
+      <div id="icon-added-wrong">
+      <p>  Answer : {{ result.answer }}</p>
+      </div>
+        
+      {% endif %}
       	{% endfor %}
       </div>
-      </div>
 
+      </div>
     </div>
   </section><!-- End Services Section -->
 	<!-- password-script -->

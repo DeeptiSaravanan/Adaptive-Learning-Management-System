@@ -34,6 +34,9 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style type="text/css">
+    form.formclass ul {list-style:none}
+  </style>
 </head>
 
   <!-- ======= Header ======= -->
@@ -48,104 +51,31 @@
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="#header">Home <i class="la la-angle-down"></i></a></li>
-          <li class="drop-down"><a href="">Courses</a>
-            <ul>
-              <li class="drop-down"><a href="#">Basics of Management</a>
-                <ul>
-                  <li><a href="#">Introduction</a></li>
-                  <li><a href="#">Planning</a></li>
-                  <li><a href="#">Organisation</a></li>
-                  <li><a href="#">Directing</a></li>
-                  <li><a href="#">Controlling</a></li>
-                </ul>
-              </li>
-              <li class="drop-down"><a href="#">Marketing Management</a>
-                <ul>
-                  <li><a href="#">Introduction to Marketing</a></li>
-                  <li><a href="#">Marketing Strategy</a></li>
-                  <li><a href="#">Marketing Mix Decisions</a></li>
-                  <li><a href="#">Buyer Behaviour</a></li>
-                  <li><a href="#">Marketing Research and Trends in Marketing</a></li>
-                </ul>
-              </li>
-              <li class="drop-down"><a href="#">Human Resource Management</a>
-                <ul>
-                  <li><a href="#">Perspectives</a></li>
-                  <li><a href="#">BestFit</a></li>
-                  <li><a href="#">Training</a></li>
-                  <li><a href="#">EmpInterest</a></li>
-                  <li><a href="#">Evaluation</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><a href="#contact">Logout</a></li>
+          <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
+          <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Counts Section ======= -->
-  <section class="counts section-bg">
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up">
-          <div class="count-box">
-            <i class="icofont-simple-smile" style="color: #20b38e;"></i>
-            <span data-toggle="counter-up">232</span>
-            <p>Happy Clients</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
-          <div class="count-box">
-            <i class="icofont-document-folder" style="color: #c042ff;"></i>
-            <span data-toggle="counter-up">521</span>
-            <p>Projects</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="400">
-          <div class="count-box">
-            <i class="icofont-live-support" style="color: #46d1ff;"></i>
-            <span data-toggle="counter-up">1,463</span>
-            <p>Hours Of Support</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
-          <div class="count-box">
-            <i class="icofont-users-alt-5" style="color: #ffb459;"></i>
-            <span data-toggle="counter-up">15</span>
-            <p>Hard Workers</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section><!-- End Counts Section -->
-
   <!-- ======= Services Section ======= -->
   <section id="about" class="about">
     <div class="container">
-      <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
+      <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
       <div class="section-title">
         <h2>Diagnostic Test - Basics of Management</h2>
-        <p class="descriptison">Duration : 30 mins</p>
-        <p id="time"></p>
+        <p class="text-right text-primary" description">Duration : {{ q_count }} mins</p>
+        <p class="text-right text-danger description" id="time"></p>
+        <input type='hidden' value='{{ q_count }}' id='q_count' />
 
       </div>
       <div class="row">
-        <form method="post"> <!--Removed action-->
+        <form method="post" id="diag" class="formclass"> <!--Removed action-->
           {% csrf_token %}
           {{ form }}
-          <div class="btn-group btn-group-justified">
-          <button type="submit" value="answer" class="btn btn-danger">Finish</button>
+          <div class="text-center">
+          <button type="submit" value="answer" class="btn btn-danger btn-lg">Finish Test</button>
           </div> 
         </form>
       </div>
@@ -183,16 +113,17 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+        display.textContent = "Time Remaining : " +minutes + ":" + seconds +" mins";
 
         if (--timer < 0) {
-            timer = duration;
+            $('#time').html('Time is up!');
+            document.getElementById("diag").submit();
         }
     }, 1000);
 }
 
 window.onload = function () {
-    var N_Minutes = 60 * 30,
+    var N_Minutes = 60 * document.getElementById('q_count').value,
         display = document.querySelector('#time');
     startTimer(N_Minutes, display);
 };  </script>
