@@ -32,6 +32,7 @@ from django.forms import formset_factory
 from youTubeSearch import Ysearch
 from articleSearch import Asearch
 from django.views.decorators.csrf import csrf_exempt
+from lrupdate import diag_pass,diag_fail
 
 
 
@@ -40,19 +41,26 @@ from django.views.decorators.csrf import csrf_exempt
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-def diagnostic(request,username,questionnaire_id):
+def diagnostic(request,username,questionnaire_id,subject,unit):
     questionnaire=get_object_or_404(Questionnaire,pk=questionnaire_id)
+    Dict = {'Easy': ['Introduction','Planning','Perspectives','BestFit','Introduction to Marketing'],'Medium':['Organising', 'Directing', 'Training', 'EmpInterest','Marketing Strategy', 'Marketing Mix Decisions'],'Hard':['Controlling','Evaluation','Buyer Behaviour','Marketing Research and Trends in Marketing']}
+    if(any(unit in x for x in Dict['Easy'])):
+        level=0.2
+    elif(any(unit in x for x in Dict['Medium'])):
+        level=0.5
+    elif(any(unit in x for x in Dict['Hard'])):
+        level=0.9 
     if request.method == "POST":
         form = Answerform(questionnaire.question_set.all(),request.POST)
-        print("post")
+        # print("post")
         if form.is_valid(): ## Will only ensure the option exists, not correctness.
-            print("form valid")
+            # print("form valid")
             results=[]
             score=0
             questionSet=questionnaire.question_set.all()
+            q_count=questionSet.count()
+            print(q_count)
             for question in questionSet:
-                if question.pk > 3:
-                    break
                 question_num = "question_%d" % question.pk
                 correct_ans=question.correct
                 user_ans=form.cleaned_data[question_num]
@@ -62,14 +70,24 @@ def diagnostic(request,username,questionnaire_id):
                 else:
                     is_correct=False
                 temp=UserAnswer(ques=question,answer=user_ans,is_correct=is_correct)
-                # temp.save()
                 results.append(temp)
-                # print(results)
-            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username})
+            score=round((score*100)/q_count,2)
+            print(score)
+            user_obj=User.objects.get(username=username)
+            user_id=user_obj.pk
+            print(user_id)
+            if score>70:
+                status="Pass"
+            #     diag_pass(user_id,level,score)
+            else:
+                status="Fail"
+            #     diag_fail(user_id,level)
+            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status})
     else:
-        print("get")
+        q_count=questionnaire.question_set.all().count()
+        print(q_count)
         form=Answerform(questions=questionnaire.question_set.all())
-    return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username})
+    return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username,"q_count":q_count})
 
 
 @csrf_exempt 
@@ -85,6 +103,8 @@ def write_to_csv(request):
         writer = csv.writer(f)
         writer.writerow(csv_row)
     f.close()
+    # Based on threshold learning rate figure out if diagnostic should be shown. return show_diag 0 - show nothing, 1 - show BM, 2 - show BM and then the actual topic  
+    request.session['bool_diagnostic']=show_diag
     return HttpResponse("yay")
 
 def dashboard(request,username):
@@ -107,7 +127,9 @@ def content(request,username,subject,unit):
         full_sub="Marketing Management"
     else:
         full_sub="Human Resource Management"
-    return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
+    show_diag=request.session['bool_diagnostic']
+
+    return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit,"show_diag":show_diag})
 
             
 def pagelogin(request):

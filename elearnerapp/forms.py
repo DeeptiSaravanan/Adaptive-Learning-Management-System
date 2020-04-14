@@ -37,20 +37,21 @@ class Loginform(forms.Form):
     )
 
 class Answerform(forms.Form):
-	def __init__(self,questions,*args, **kwargs):
-	    self.questions = questions
-	    super(Answerform, self).__init__(*args, **kwargs) 
-	    for question in questions:
-	    	if question.pk > 3:
-	    		break
-	    	field_name = "question_%d" % question.pk
-	    	choices = []
-	    	choices.append(('A',question.option_a))
-	    	choices.append(('B',question.option_b))
-	    	choices.append(('C',question.option_c))
-	    	choices.append(('D',question.option_d))	
-	    	self.fields[field_name]=forms.ChoiceField(label=question.q_text, required=True, 
-	    	choices=choices, widget=forms.RadioSelect)
+    def __init__(self,questions,*args, **kwargs):
+        self.questions = questions
+        super(Answerform, self).__init__(*args, **kwargs) 
+        q_no=1
+        for question in questions:
+            field_name = "question_%d" % question.pk
+            choices = []
+            choices.append(('A',"A) "+question.option_a))
+            choices.append(('B',"B) "+question.option_b))
+            choices.append(('C',"C) "+question.option_c))
+            choices.append(('D',"D) "+question.option_d))	
+            print(choices)
+            self.fields[field_name]=forms.ChoiceField(label=str(q_no) +". " +question.q_text, required=False, 
+            choices=choices, widget=forms.RadioSelect)
+            q_no=q_no+1
 	        
 
 
