@@ -104,7 +104,8 @@ def write_to_csv(request):
         writer.writerow(csv_row)
     f.close()
     # Based on threshold learning rate figure out if diagnostic should be shown. return show_diag 0 - show nothing, 1 - show BM, 2 - show BM and then the actual topic  
-    request.session['bool_diagnostic']=show_diag
+    # show_diag=1
+    # request.session['bool_diagnostic']=show_diag
     return HttpResponse("yay")
 
 def dashboard(request,username):
@@ -127,9 +128,9 @@ def content(request,username,subject,unit):
         full_sub="Marketing Management"
     else:
         full_sub="Human Resource Management"
-    show_diag=request.session['bool_diagnostic']
+    # show_diag=request.session['bool_diagnostic']
 
-    return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit,"show_diag":show_diag})
+    return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
 
             
 def pagelogin(request):
