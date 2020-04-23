@@ -53,17 +53,29 @@
                 width:50%; 
                 height:280px; 
             } 
-      #leftbox { 
+      #leftboxart { 
                 float:left;  
                 /*background:#ffe6ff; */
-                width:75%; 
-                height:60px; 
+                width:80%; 
+                height:70px; 
             } 
-            #rightbox{ 
+            #rightboxart{ 
                 float:right; 
                 /*background:#cce6ff; */
-                width:25%; 
-                height:60px; 
+                width:20%; 
+                height:70px; 
+            } 
+      #leftboxboo { 
+                float:left;  
+                /*background:#ffe6ff; */
+                width:80%; 
+                height:100px; 
+            } 
+            #rightboxboo{ 
+                float:right; 
+                /*background:#cce6ff; */
+                width:20%; 
+                height:100px; 
             } 
       #column1{ 
       background-color: #a1edcc; 
@@ -165,19 +177,15 @@
       </div>
       <div class="description">
       <main id="boxes">
-        <div class="section-title">
-      <h2>BOOKS</h2>
-      
-</div>
       <h4 style="color:purple; font-style: italic;">Prescribed Text Book - </h4><br>
       
-        <div id="leftbox">
+        <div id="leftboxboo">
           <div id="icon-added-book">
-        <a href="#" style="color:black; font-size: 120%;">book name</a>
+        <a href="#" style="color:black; font-size: 100%;">book name</a>
       </div>
       <br>
       </div>
-      <div id="rightbox">
+      <div id="rightboxboo">
         <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
         <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
         <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
@@ -187,13 +195,13 @@
     
         <h4 style="color:purple; font-style: italic;">Reference Books - </h4><br>
         
-          <div id="leftbox">
+          <div id="leftboxboo">
             <div id="icon-added-book">
-          <a href="#" style="color:black; font-size: 120%;">book name</a>
+          <a href="#" style="color:black; font-size: 100%;">book name</a>
         </div>
         <br>
         </div>
-        <div id="rightbox">
+        <div id="rightboxboo">
           <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
           <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
           <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
@@ -203,23 +211,20 @@
 
           <h4 style="color:purple; font-style: italic;">Additonal References - </h4><br>
       {% for book in books.itertuples %}
-      <div id="leftbox">
+      <div id="leftboxboo">
         <div id="icon-added-book">
-      <a href={{ book.Link }} style="color:black; font-size: 120%;">{{ book.Description }}</a>
+      <a href={{ book.Link }} style="color:black; font-size: 100%;">{{ book.Description }}</a>
     </div>
     <br>
     </div>
-    <div id="rightbox">
+    <div id="rightboxboo">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
     </div>
     <br>
       {% endfor %}
-      <br>
-      <div class="section-title">
-      <h2>VIDEOS</h2>
-    </div>
+      <h4 style="color:purple; font-style: italic;">Videos - </h4><br>
       {% for link in videos %}
       <div id="leftboxvid">
       <iframe width="420" height="240" src={{ link }}>
@@ -236,17 +241,15 @@
       <br>
     </div>
       {% endfor %}
-
-      <div class="section-title">
-      <h2>ARTICLES</h2>
-    </div>
+      <br>
+      <h4 style="color:purple; font-style: italic;">Related Articles - </h4><br>
       {% for key,value in articles.items %}
-      <div id="leftbox">
+      <div id="leftboxart">
       <div id="icon-added-article">
-      <a href={{ key }} style="color:black; font-size: 120%;">{{ value }}</a>
+      <a href={{ key }} style="color:black; font-size: 100%;">{{ value }}</a>
     </div>
   </div>
-      <div id="rightbox">
+      <div id="rightboxart">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
       <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,{{ level }});">Finish</button>
