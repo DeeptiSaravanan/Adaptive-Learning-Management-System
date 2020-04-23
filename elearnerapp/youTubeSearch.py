@@ -25,7 +25,7 @@ def Ysearch(keyword):
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
-    query=keyword+"+management"
+    query=urllib.parse.quote(keyword)+"+management"
     url = "https://www.youtube.com/results?search_query=" + query 
     response = urllib.request.urlopen(url)
     html = response.read()
@@ -35,8 +35,8 @@ def Ysearch(keyword):
     count = 1
     for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
         appendage=vid['href'].replace('watch?v=','embed/')
-        print('https://www.youtube.com' + vid['href'])
-        print("\n")
+        # print('https://www.youtube.com' + vid['href'])
+        # print("\n")
         url = 'https://www.youtube.com' + appendage
         # url_data = urlparse(url)
         # query = urllib.parse.parse_qs(url_data.query)
@@ -93,4 +93,4 @@ def Ysearch(keyword):
         # # iterate over all available transcripts
         # for transcript in transcript_list:
         # transcripts.fetch()
-     
+# Ysearch("Introduction to Marketing")
