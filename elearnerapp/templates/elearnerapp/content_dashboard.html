@@ -5,6 +5,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
   <title>Home</title>
   <meta content="" name="descriptison">
@@ -69,13 +72,13 @@
                 float:left;  
                 /*background:#ffe6ff; */
                 width:80%; 
-                height:100px; 
+                height:70px; 
             } 
             #rightboxboo{ 
                 float:right; 
                 /*background:#cce6ff; */
                 width:20%; 
-                height:100px; 
+                height:70px; 
             } 
       #column1{ 
       background-color: #a1edcc; 
@@ -181,19 +184,25 @@
       
         <div id="leftboxboo">
           <div id="icon-added-book">
-        <a href="#" style="color:black; font-size: 100%;">book name</a>
+            {% if subject == "BM" %}
+        <a href="#" style="color:black; font-size: 100%;">A Textbook on Principles of Management by R.S. Naagarazan (Author), Syed S. Ahamed (Author), New Age International Private Limited; Second edition (2020)</a>
+        {% elif subject == "MM" %}
+        <a href="#" style="color:black; font-size: 100%;">Marketing Management: Concepts, Cases, Challenges and Trends by Rajan (Author), Govinda (Author), Prentice Hall India Learning Private Limited; 2 edition (2007)</a>
+        {% elif subject == "HR" %}
+        <a href="#" style="color:black; font-size: 100%;">Human Resource Management: For Anna University by Pravin Durai (Author), Pearson Publications; (2011)</a>
+        {% endif %}
       </div>
       <br>
       </div>
       <div id="rightboxboo">
         <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
         <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-        <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
       </div>
       <br>
         <br>
     
-        <h4 style="color:purple; font-style: italic;">Reference Books - </h4><br>
+<!--         <h4 style="color:purple; font-style: italic;">Reference Books - </h4><br>
         
           <div id="leftboxboo">
             <div id="icon-added-book">
@@ -207,23 +216,40 @@
           <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
         </div>
         <br>
-          <br>
+          <br> -->
 
-          <h4 style="color:purple; font-style: italic;">Additonal References - </h4><br>
+          <h4 style="color:purple; font-style: italic;">Reference Books- </h4><br>
       {% for book in books.itertuples %}
       <div id="leftboxboo">
         <div id="icon-added-book">
-      <a href={{ book.Link }} style="color:black; font-size: 100%;">{{ book.Description }}</a>
+      <a href={{ book.Link }} style="color:black; font-size: 100%;">{{ book.Description }} by {{book.Author}}</a>
     </div>
     <br>
     </div>
     <div id="rightboxboo">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
+      <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
     </div>
     <br>
       {% endfor %}
+
+      <br>
+      <h4 style="color:purple; font-style: italic;">Related Articles - </h4><br>
+      {% for key,value in articles.items %}
+      <div id="leftboxart">
+      <div id="icon-added-article">
+      <a href={{ key }} style="color:black; font-size: 100%;">{{ value }}</a>
+    </div>
+  </div>
+      <div id="rightboxart">
+      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
+      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,{{ level }});">Finish</button>
+    </div>
+      {% endfor %}
+
+
       <h4 style="color:purple; font-style: italic;">Videos - </h4><br>
       {% for link in videos %}
       <div id="leftboxvid">
@@ -241,23 +267,25 @@
       <br>
     </div>
       {% endfor %}
-      <br>
-      <h4 style="color:purple; font-style: italic;">Related Articles - </h4><br>
-      {% for key,value in articles.items %}
-      <div id="leftboxart">
-      <div id="icon-added-article">
-      <a href={{ key }} style="color:black; font-size: 100%;">{{ value }}</a>
-    </div>
-  </div>
-      <div id="rightboxart">
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,{{ level }});">Finish</button>
-    </div>
-      {% endfor %}
       </div>
 
     </div>
+
+
+  <!-- Modal -->
+<!--   <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="card border-light mb-3" style="max-width: 20rem;">
+        <div class="card-body">
+          <p class="card-text">  <strong>Well done!</strong> You have successfully finished this material. <strong>Would you recommend this to a fellow learner?</strong></p>
+          <button type="button" class="btn btn-success btn-sm" id="yesbut" value="yes">Yes</button>
+          <button type="button" class="btn btn-danger btn-sm" id="nobut" value="no">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ -->
+
   </section><!-- End Services Section -->
       <script>
               /*Stop Watch*/
@@ -272,17 +300,47 @@
                 console.log(i);
           window.clearInterval(interval);
             }
+
+
+            
+
+
+            function SendScore(value)
+            {
+              console.log("hello there")
+              // var score=value;
+              // $.ajax({
+              //   type:"POST",
+              //   url: "{% url 'write_to_csv' %}",
+              //   data: {
+              //     'score':score
+              //   },
+              //   dataType: 'json',
+              //   success: function (data) {
+              //       alert(data);
+              //   }
+              // });
+            }
+
             function CounterEnd(subject,mode,level){
               var subject=subject;
               var mode=mode;
               var level=level;
-              var txt;
+              // var txt;
               if (confirm("Would you recommend this to a fellow learner?")) {
                 score = 1;
               } else {
                 score = -1;
               }
-              console.log(txt);
+              // console.log(txt);
+              // $('.myModal').find('button[id="yesbut"]').click(function(){
+              //   console.log("sup bro");
+              //   score=1;
+              // })
+              // $('.myModal').find('nobut').click(function(){
+              //   score=-1;
+              // })
+              // console.log(score);
               $.ajax({
                 type:"POST",
                 url: "{% url 'write_to_csv' %}",
