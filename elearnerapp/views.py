@@ -33,6 +33,8 @@ from youTubeSearch import Ysearch
 from articleSearch import Asearch
 from django.views.decorators.csrf import csrf_exempt
 from lrupdate import diag_pass,diag_fail
+from finish_button import calc
+from django.http import JsonResponse
 
 
 
@@ -41,25 +43,22 @@ from lrupdate import diag_pass,diag_fail
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-def diagnostic(request,username,questionnaire_id,subject,unit):
+def diagnostic(request,username,subject,unit):
+    qid_map={'Introduction':1,'Planning':1,'Organising':1,'Directing':1,'Controlling':1,'Perspectives':8,'BestFit':9,'Introduction to Marketing':3, 'Training':10, 'EmpInterest':11,'Marketing Strategy':4, 'Marketing Mix Decisions':5,'Evaluation':12,'Buyer Behaviour':6,'Marketing Research and Trends in Marketing':7}
+    questionnaire_id=qid_map[unit]
     questionnaire=get_object_or_404(Questionnaire,pk=questionnaire_id)
-    Dict = {'Easy': ['Introduction','Planning','Perspectives','BestFit','Introduction to Marketing'],'Medium':['Organising', 'Directing', 'Training', 'EmpInterest','Marketing Strategy', 'Marketing Mix Decisions'],'Hard':['Controlling','Evaluation','Buyer Behaviour','Marketing Research and Trends in Marketing']}
-    if(any(unit in x for x in Dict['Easy'])):
-        level=0.2
-    elif(any(unit in x for x in Dict['Medium'])):
-        level=0.5
-    elif(any(unit in x for x in Dict['Hard'])):
-        level=0.9 
+    title_map={'Introduction':'Introduction','Planning':'Planning','Organising':'Organising','Directing':'Directing','Controlling':'Controlling','Perspectives':'Perspectives','BestFit':'BestFit','Introduction to Marketing':'Intro_marketing', 'Training':'Training', 'EmpInterest':'EmpInterest','Marketing Strategy':'Strategy', 'Marketing Mix Decisions':'MixDecisions','Evaluation':'Evaluation','Buyer Behaviour':'Behaviour','Marketing Research and Trends in Marketing':'Trends'}
+    unit=title_map[unit]
+ 
     if request.method == "POST":
-        form = Answerform(questionnaire.question_set.all(),request.POST)
-        # print("post")
+
         if form.is_valid(): ## Will only ensure the option exists, not correctness.
-            # print("form valid")
+
             results=[]
             score=0
             questionSet=questionnaire.question_set.all()
             q_count=questionSet.count()
-            print(q_count)
+
             for question in questionSet:
                 question_num = "question_%d" % question.pk
                 correct_ans=question.correct
@@ -72,46 +71,59 @@ def diagnostic(request,username,questionnaire_id,subject,unit):
                 temp=UserAnswer(ques=question,answer=user_ans,is_correct=is_correct)
                 results.append(temp)
             score=round((score*100)/q_count,2)
-            print(score)
+
             user_obj=User.objects.get(username=username)
             user_id=user_obj.pk
-            print(user_id)
             if score>70:
                 status="Pass"
-            #     diag_pass(user_id,level,score)
+                diag_pass(user_id,unit,score)
             else:
                 status="Fail"
-            #     diag_fail(user_id,level)
-            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status})
+                diag_fail(user_id,unit)
+            if subject=="BM":
+                full_sub ="Basics of Management"
+            elif subject=="MM":
+                full_sub="Marketing Management"
+            else:
+                full_sub="Human Resource Management"
+            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status,"full_sub":full_sub,"subject":subject,"unit":unit})
     else:
         q_count=questionnaire.question_set.all().count()
-        print(q_count)
         form=Answerform(questions=questionnaire.question_set.all())
     return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username,"q_count":q_count})
 
 
 @csrf_exempt 
 def write_to_csv(request):
+    print("inside write to csv")
     time=request.POST.get('timer',None)
     subject=request.POST.get('subject',None)
     level=request.POST.get('level',None)
     mode=request.POST.get('mode',None)
-    score=request.POST.get('score',None) #write to user feedback csv
-    csv_row=[time,level,mode,0.0,0.0,0.0]
-    fields=['Time','Level','Mode','NewRate','Rate','Output']
-    with open('C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\'+subject+'_NN.csv', 'a') as f:
-        writer = csv.writer(f)
-        writer.writerow(csv_row)
-    f.close()
-    # Based on threshold learning rate figure out if diagnostic should be shown. return show_diag 0 - show nothing, 1 - show BM, 2 - show BM and then the actual topic  
-    # show_diag=1
-    # request.session['bool_diagnostic']=show_diag
-    return HttpResponse("yay")
+    username=request.POST.get('username',None)
+    unit=request.POST.get('unit',None)
+    feedback=request.POST.get('score',None) #write to user feedback csv
+    user_obj=User.objects.get(username=username)
+    userid=user_obj.pk
+
+    bool_diag=calc(userid,time,mode,level,subject)
+    print("inside view1",bool_diag)
+
+    if bool_diag:
+        return JsonResponse({
+                    'success': True,
+                    'url': reverse('content', args=[username,subject,unit]),
+                })
+    return JsonResponse({ 'success': False, 'url2': reverse('diagnostic', args=[username,subject,unit]), })
 
 def dashboard(request,username):
     return render(request,'elearnerapp/dashboard.html',{"username":username})
 
+
 def content(request,username,subject,unit):
+    #eligible 0 if BM diag has not been taken, 1 if BM diag has been taken and failed, 2 if taken and passed
+    # if subject=="MM" or subject="HR" and eligible==0:
+    #     return redirect(reverse('diagnostic', args=[username,"BM","Introduction"]))
     Dict = {'Easy': ['Introduction','Planning','Perspectives','BestFit','Introduction to Marketing'],'Medium':['Organising', 'Directing', 'Training', 'EmpInterest','Marketing Strategy', 'Marketing Mix Decisions'],'Hard':['Controlling','Evaluation','Buyer Behaviour','Marketing Research and Trends in Marketing']}
     if(any(unit in x for x in Dict['Easy'])):
         level=0.2
@@ -121,15 +133,13 @@ def content(request,username,subject,unit):
         level=0.9        
     book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
     youtube_data = Ysearch(unit) 
-    article_data = Asearch(unit)
+    article_data = Asearch(subject,unit)
     if subject=="BM":
         full_sub ="Basics of Management"
     elif subject=="MM":
         full_sub="Marketing Management"
     else:
         full_sub="Human Resource Management"
-    # show_diag=request.session['bool_diagnostic']
-
     return render(request,'elearnerapp/content_dashboard.html', {"full_sub":full_sub,"username": username,"books":book_data,"videos":youtube_data,"articles":article_data,"subject":subject,"level":level,"unit":unit})
 
             
