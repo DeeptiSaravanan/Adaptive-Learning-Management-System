@@ -13,9 +13,9 @@ def row_no(userid):
 		rowno = rowno + 1
 	return rowno
 
-def diag_fail(userid, level):
+def diag_fail(userid):
 	idlist = []
-	df = pd.read_csv("lr.csv", usecols=['Userid',level], engine='python')
+	df = pd.read_csv("lr.csv", usecols=['Userid'], engine='python')
 	dataset = df.values
 	dataset = dataset.astype('float32')
 	val=0
@@ -43,15 +43,14 @@ def diag_pass(userid, level, score):
 	df = pd.read_csv("lr.csv", usecols=['current_rate',level], engine='python')
 	dataset = df.values
 	dataset = dataset.astype('float32')
-	#print(df)
+
 	maxscore = 100
 	rowno = row_no(userid)
-	curr = dataset[rowno][0]
+	curr = dataset[rowno][1] #Changed it to [rowno][1]
 	print(curr)
-	#print('\n')
 	val = curr * score
 	val = val/maxscore
-	#print(val)
+	
 
 	f = open('lr.csv','r')
 	r = csv.reader(f) # Check if you can save computation here
@@ -74,6 +73,7 @@ def diag_pass(userid, level, score):
 	f.close()
 
 #diag_pass(2,'BH',80)
+diag_fail(2)
 
 	
 
