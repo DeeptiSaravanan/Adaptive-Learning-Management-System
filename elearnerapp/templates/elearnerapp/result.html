@@ -65,38 +65,69 @@
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
         <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
-          <li class="active"><a href="#header">Home <i class="la la-angle-down"></i></a></li>
-          <li class="drop-down"><a href="">Courses</a>
+
+        {% if status == "Fail" and subject == "BM" %}
+        <li class="drop-down"><a href="">Courses</a>
+          <ul>
+            <li class="drop-down"><a href="#">Basics of Management</a>
+              <ul>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Introduction">Introduction</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Planning">Planning</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Organising">Organising</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Directing">Directing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Controlling">Controlling</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
+
+        {% elif status == "Fail" and subject != "BM" %}
+        <li class="drop-down"><a href="">Courses</a>
+          <ul>
+            <li class="drop-down"><a href="#">{{ full_sub }}</a>
+              <ul>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/{{ unit }}">{{ unit }}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
+
+        {% if status == "Pass" %}
+<li class="drop-down"><a href="">Courses</a>
             <ul>
               <li class="drop-down"><a href="#">Basics of Management</a>
                 <ul>
-                  <li><a href="#">Introduction</a></li>
-                  <li><a href="#">Planning</a></li>
-                  <li><a href="#">Organisation</a></li>
-                  <li><a href="#">Directing</a></li>
-                  <li><a href="#">Controlling</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Introduction">Introduction</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Planning">Planning</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Organising">Organising</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Directing">Directing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/BM/Controlling">Controlling</a></li>
                 </ul>
               </li>
               <li class="drop-down"><a href="#">Marketing Management</a>
                 <ul>
-                  <li><a href="#">Introduction to Marketing</a></li>
-                  <li><a href="#">Marketing Strategy</a></li>
-                  <li><a href="#">Marketing Mix Decisions</a></li>
-                  <li><a href="#">Buyer Behaviour</a></li>
-                  <li><a href="#">Marketing Research and Trends in Marketing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Introduction to Marketing">Introduction to Marketing</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Strategy">Marketing Strategy</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Mix Decisions">Marketing Mix Decisions</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Buyer Behaviour">Buyer Behaviour</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Marketing Research and Trends in Marketing">Marketing Research and Trends in Marketing</a></li>
                 </ul>
               </li>
               <li class="drop-down"><a href="#">Human Resource Management</a>
                 <ul>
-                  <li><a href="#">Perspectives</a></li>
-                  <li><a href="#">BestFit</a></li>
-                  <li><a href="#">Training</a></li>
-                  <li><a href="#">EmpInterest</a></li>
-                  <li><a href="#">Evaluation</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/HR/Perspectives">Perspectives</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/BestFit">BestFit</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Training">Training</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/EmpInterest">EmpInterest</a></li>
+                  <li><a href="/elearner/{{ username }}/dashboard/MM/Evaluation">Evaluation</a></li>
                 </ul>
               </li>
             </ul>
           </li>
+        {% endif %}
+
           <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->

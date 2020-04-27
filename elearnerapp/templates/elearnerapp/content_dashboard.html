@@ -120,7 +120,7 @@
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
           <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
-          <li><a href="http://127.0.0.1:8000/elearner/{{ username }}/dashboard">Home</a></li>
+          <!-- <li><a href="http://127.0.0.1:8000/elearner/{{ username }}/dashboard">Home</a></li> -->
           <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->
@@ -197,7 +197,7 @@
       <div id="rightboxboo">
         <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
         <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-        <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
       </div>
       <br>
         <br>
@@ -229,7 +229,7 @@
     <div id="rightboxboo">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
+      <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
     </div>
     <br>
       {% endfor %}
@@ -245,7 +245,7 @@
       <div id="rightboxart">
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,{{ level }});">Finish</button>
+      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
     </div>
       {% endfor %}
 
@@ -263,7 +263,7 @@
       <br>
       <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
       <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,{{ level }});">Finish</button>
+      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
       <br>
     </div>
       {% endfor %}
@@ -322,10 +322,12 @@
               // });
             }
 
-            function CounterEnd(subject,mode,level){
+            function CounterEnd(subject,mode,level,username,unit){
               var subject=subject;
               var mode=mode;
               var level=level;
+              var username=username;
+              var unit=unit;
               // var txt;
               if (confirm("Would you recommend this to a fellow learner?")) {
                 score = 1;
@@ -349,16 +351,26 @@
                   'subject':subject,
                   'mode':mode,
                   'level':level,
-                  'score':score
+                  'score':score,
+                  'username':username,
+                  'unit':unit
                 },
-                dataType: 'json',
-                success: function (data) {
-                    alert(data);
+                // dataType: 'json',
+                // success: function (data) {
+                //     alert(data);
+                // }
+              }).done(function (data) {
+                if (data.success) {
+                    window.location.href = data.url;
+                }    
+                else {
+                    window.location.href = data.url2;
                 }
-              });
+            });
 
               /*End*/
             }
+
 
           
       </script>
