@@ -51,7 +51,7 @@ def diagnostic(request,username,subject,unit):
     unit=title_map[unit]
  
     if request.method == "POST":
-
+        form=Answerform(questionnaire.question_set.all(),request.POST)
         if form.is_valid(): ## Will only ensure the option exists, not correctness.
 
             results=[]
@@ -76,10 +76,10 @@ def diagnostic(request,username,subject,unit):
             user_id=user_obj.pk
             if score>70:
                 status="Pass"
-                diag_pass(user_id,unit,score)
+                # diag_pass(user_id,unit,score)
             else:
                 status="Fail"
-                diag_fail(user_id,unit)
+                # diag_fail(user_id,unit)
             if subject=="BM":
                 full_sub ="Basics of Management"
             elif subject=="MM":
@@ -106,7 +106,7 @@ def write_to_csv(request):
     user_obj=User.objects.get(username=username)
     userid=user_obj.pk
 
-    bool_diag=calc(userid,time,mode,level,subject)
+    bool_diag =calc(userid,time,mode,level,subject)
     print("inside view1",bool_diag)
 
     if bool_diag:
