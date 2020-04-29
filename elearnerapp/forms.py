@@ -48,7 +48,7 @@ class Answerform(forms.Form):
             choices.append(('B',"B) "+question.option_b))
             choices.append(('C',"C) "+question.option_c))
             choices.append(('D',"D) "+question.option_d))	
-            print(choices)
+            # print(choices)
             self.fields[field_name]=forms.ChoiceField(label=str(q_no) +". " +question.q_text, required=False, 
             choices=choices, widget=forms.RadioSelect)
             q_no=q_no+1
