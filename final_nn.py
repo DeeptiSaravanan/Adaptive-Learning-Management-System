@@ -60,7 +60,9 @@ def lrcalculation(course):
 	trainY = numpy.reshape(trainY, (-1,1))
 	testY = numpy.reshape(testY, (-1,1))
 
-	model = tf.keras.models.load_model(course+"_RNN.h5")
+	model = tf.keras.models.load_model(course+"_RNN.h5", compile=False) #added compile=False and the next line
+
+	model.compile(loss='mean_squared_error', optimizer='sgd')
 	model.fit(trainX, trainY, epochs=10, batch_size=32, verbose=2)
 	# make predictions
 	trainPredict = model.predict(trainX)
@@ -101,7 +103,8 @@ def lrcalculation(course):
 	X_val,X_test = X_v_test[:testingsize-1],X_v_test[testingsize-1]
 	Y_val,Y_test = Y_v_test[:testingsize-1],Y_v_test[testingsize-1]
 
-	model1 = tf.keras.models.load_model(course+"_ANN.h5")
+	model1 = tf.keras.models.load_model(course+"_ANN.h5",compile=False)
+	model1.compile(loss='mean_squared_error', optimizer='Adam')
 
 	history = model1.fit(X_train, Y_train,
           	batch_size=32, epochs=10,
@@ -140,3 +143,4 @@ def lrcalculation(course):
 	return Ynew[0][0]
 
 
+lrcalculation("BM")
