@@ -80,7 +80,6 @@
             </li>
           </ul>
         </li>
-        {% endif %}
 
         {% elif status == "Fail" and subject != "BM" %}
         <li class="drop-down"><a href="">Courses</a>
@@ -92,9 +91,8 @@
             </li>
           </ul>
         </li>
-        {% endif %}
 
-        {% if status == "Pass" %}
+        {% elif status == "Pass" %}
 <li class="drop-down"><a href="">Courses</a>
             <ul>
               <li class="drop-down"><a href="#">Basics of Management</a>
