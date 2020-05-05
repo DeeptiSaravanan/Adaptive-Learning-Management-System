@@ -48,7 +48,14 @@ def diagnostic(request,username,subject,unit):
     questionnaire_id=qid_map[unit]
     questionnaire=get_object_or_404(Questionnaire,pk=questionnaire_id)
     title_map={'Introduction':'Introduction','Planning':'Planning','Organising':'Organising','Directing':'Directing','Controlling':'Controlling','Perspectives':'Perspectives','BestFit':'BestFit','Introduction to Marketing':'Intro_marketing', 'Training':'Training', 'EmpInterest':'EmpInterest','Marketing Strategy':'Strategy', 'Marketing Mix Decisions':'MixDecisions','Evaluation':'Evaluation','Buyer Behaviour':'Behaviour','Marketing Research and Trends in Marketing':'Trends'}
+    full_unit=unit
     unit=title_map[unit]
+    if subject=="BM":
+        full_sub ="Basics of Management"
+    elif subject=="MM":
+        full_sub="Marketing Management"
+    else:
+        full_sub="Human Resource Management"
  
     if request.method == "POST":
         form=Answerform(questionnaire.question_set.all(),request.POST)
@@ -80,17 +87,12 @@ def diagnostic(request,username,subject,unit):
             else:
                 status="Fail"
                 # diag_fail(user_id,unit)
-            if subject=="BM":
-                full_sub ="Basics of Management"
-            elif subject=="MM":
-                full_sub="Marketing Management"
-            else:
-                full_sub="Human Resource Management"
+
             return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status,"full_sub":full_sub,"subject":subject,"unit":unit})
     else:
         q_count=questionnaire.question_set.all().count()
         form=Answerform(questions=questionnaire.question_set.all())
-    return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username,"q_count":q_count})
+    return render(request,'elearnerapp/diagnostic.html', {"form": form,"username":username,"q_count":q_count,"full_sub":full_sub,"unit":full_unit})
 
 
 @csrf_exempt 
@@ -106,15 +108,21 @@ def write_to_csv(request):
     user_obj=User.objects.get(username=username)
     userid=user_obj.pk
 
-    bool_diag =calc(userid,time,mode,level,subject)
-    print("inside view1",bool_diag)
+    if mode==0.6:
+        time=time*100
+    if mode==0.3:
+        time=time*60
 
-    if bool_diag:
-        return JsonResponse({
-                    'success': True,
-                    'url': reverse('content', args=[username,subject,unit]),
-                })
-    return JsonResponse({ 'success': False, 'url2': reverse('diagnostic', args=[username,subject,unit]), })
+    # bool_diag =calc(userid,time,mode,level,subject)
+    # print("inside view1",bool_diag)
+
+    # if bool_diag:
+    #     return JsonResponse({
+    #                 'success': True,
+    #                 'url': reverse('content', args=[username,subject,unit]),
+    #             })
+    # return JsonResponse({ 'success': False, 'url2': reverse('diagnostic', args=[username,subject,unit]), })
+    return HttpResponse("yay")
 
 def dashboard(request,username):
     return render(request,'elearnerapp/dashboard.html',{"username":username})
@@ -131,7 +139,7 @@ def content(request,username,subject,unit):
         level=0.5
     elif(any(unit in x for x in Dict['Hard'])):
         level=0.9        
-    book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv")
+    book_data= pandas.read_csv("C:\\Users\\shwet\\Desktop\\E-learner-Shwetha\\"+subject+"_books.csv", encoding= 'unicode_escape')
     youtube_data = Ysearch(unit) 
     article_data = Asearch(subject,unit)
     if subject=="BM":
