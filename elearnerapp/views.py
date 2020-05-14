@@ -88,7 +88,7 @@ def diagnostic(request,username,subject,unit):
                 status="Fail"
                 # diag_fail(user_id,unit)
 
-            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status,"full_sub":full_sub,"subject":subject,"unit":unit})
+            return render(request,'elearnerapp/result.html',{"results": results,"score":score,"username":username,"status":status,"full_sub":full_sub,"subject":subject,"unit":full_unit})
     else:
         q_count=questionnaire.question_set.all().count()
         form=Answerform(questions=questionnaire.question_set.all())
