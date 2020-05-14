@@ -29,6 +29,7 @@
   <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -105,6 +106,11 @@
       content: "\f044";
     }
     </style>
+    <script type="text/javascript">
+$(document).on('ready', function(){
+    $('#myModal').modal('show');
+});
+    </script>
 </head>
 
   <!-- ======= Header ======= -->
@@ -171,155 +177,166 @@
     </div>
   </section><!-- End Counts Section -->
 
-  <!-- ======= Services Section ======= -->
-  <section id="about" class="about">
+
+<!--   <section id="about" class="about">
     <div class="container">
-      <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
-      <div class="section-title">
-        <h2>{{ full_sub }} - {{ unit }}</h2>
-      </div>
-      <div class="description">
-      <main id="boxes">
-      <h4 style="color:purple; font-style: italic;">Prescribed Text Book - </h4><br>
-      
-        <div id="leftboxboo">
-          <div id="icon-added-book">
-            {% if subject == "BM" %}
-        <a href="#" style="color:black; font-size: 100%;">A Textbook on Principles of Management by R.S. Naagarazan (Author), Syed S. Ahamed (Author), New Age International Private Limited; Second edition (2020)</a>
-        {% elif subject == "MM" %}
-        <a href="#" style="color:black; font-size: 100%;">Marketing Management: Concepts, Cases, Challenges and Trends by Rajan (Author), Govinda (Author), Prentice Hall India Learning Private Limited; 2 edition (2007)</a>
-        {% elif subject == "HR" %}
-        <a href="#" style="color:black; font-size: 100%;">Human Resource Management: For Anna University by Pravin Durai (Author), Pearson Publications; (2011)</a>
-        {% endif %}
-      </div>
-      <br>
-      </div>
-      <div id="rightboxboo">
-        <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-        <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-        <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
-      </div>
-      <br>
-        <br>
-    
-<!--         <h4 style="color:purple; font-style: italic;">Reference Books - </h4><br>
-        
-          <div id="leftboxboo">
-            <div id="icon-added-book">
-          <a href="#" style="color:black; font-size: 100%;">book name</a>
+
+      <div class="row no-gutters">
+
+        <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
+
+          <div class="section-title">
+            <h2>Instructions</h2>
+            <ul>
+            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
+            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
+            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
+          </div>
+
         </div>
-        <br>
-        </div>
-        <div id="rightboxboo">
-          <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-          <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-          <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.6,{{ level }});">Finish</button>
-        </div>
-        <br>
-          <br> -->
-
-          <h4 style="color:purple; font-style: italic;">Reference Books- </h4><br>
-      {% for book in books.itertuples %}
-      <div id="leftboxboo">
-        <div id="icon-added-book">
-      <a href={{ book.Link }} style="color:black; font-size: 100%;">{{ book.Description }} by {{book.Author}}</a>
-    </div>
-    <br>
-    </div>
-    <div id="rightboxboo">
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
-    </div>
-    <br>
-      {% endfor %}
-
-      <br>
-      <h4 style="color:purple; font-style: italic;">Related Articles - </h4><br>
-      {% for key,value in articles.items %}
-      <div id="leftboxart">
-      <div id="icon-added-article">
-      <a href={{ key }} style="color:black; font-size: 100%;">{{ value }}</a>
-    </div>
-  </div>
-      <div id="rightboxart">
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
-    </div>
-      {% endfor %}
-
-
-      <h4 style="color:purple; font-style: italic;">Videos - </h4><br>
-      {% for link in videos %}
-      <div id="leftboxvid">
-      <iframe width="420" height="240" src={{ link }}>
-      </iframe>
-    </div>
-    <div id="rightboxvid">
-      <br>
-      <br>
-      <br>
-      <br>
-      <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-      <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-      <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
-      <br>
-    </div>
-      {% endfor %}
       </div>
 
     </div>
+  </section> -->
 
+
+
+      <!-- ======= Services Section ======= -->
+    <section id="services" class="about">
+      <div class="container">
+
+        <div class="section-title">
+          <h3>  </h3>
+        </div>
+
+        <div class="section-title">
+          <h3>{{ full_sub }} - {{ unit }}</h3>
+          <div class="progress">
+              <div class="progress-bar bg-primary" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"><span class="badge badge-primary">35%</span></div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <h3>  </h3>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-8 icon-box">
+            <h4 class="title"><a href="">Prescribed Text Book - </a></h4>
+          </div>
+
+          <div class="col-12 col-md-8 icon-box text-left">
+              <div id="icon-added-book">
+                {% if subject == "BM" %}
+              <a href="#" style="color:black; font-size: 100%;" id="tb1">A Textbook on Principles of Management by R.S. Naagarazan (Author), Syed S. Ahamed (Author), New Age International Private Limited; Second edition (2020)</a>
+              {% elif subject == "MM" %}
+              <a href="#" style="color:black; font-size: 100%;">Marketing Management: Concepts, Cases, Challenges and Trends by Rajan (Author), Govinda (Author), Prentice Hall India Learning Private Limited; 2 edition (2007)</a>
+              {% elif subject == "HR" %}
+              <a href="#" style="color:black; font-size: 100%;">Human Resource Management: For Anna University by Pravin Durai (Author), Pearson Publications; (2011)</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6 col-md-4 icon-box">
+            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart('tb1');">Start</button>
+            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+          </div>
+
+
+          <div class="col-12 col-md-8 icon-box ">
+            <h4 class="title"><a href="">Reference Books- </a></h4>
+          </div>
+
+        {% for book in books.itertuples %}
+          <div class="col-12 col-md-8 icon-box text-left">
+                <div id="icon-added-book">
+              <a href={{ book.Link }} style="color:black; font-size: 100%;">{{ book.Description }} by {{book.Author}}</a>
+                </div>
+          </div>
+
+          <div class="col-6 col-md-4 icon-box">
+            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
+            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+          </div>
+          {% endfor %}
+
+
+          <div class="col-12 col-md-8 icon-box">
+            <h4 class="title"><a href="">Related Articles - </a></h4>
+          </div>
+
+          {% for key,value in articles.items %}
+          <div class="col-12 col-md-8 icon-box text-left">
+            <div id="icon-added-article">
+            <a href={{ key }} style="color:black; font-size: 100%;">{{ value }}</a>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-4 icon-box">
+            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
+            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+          </div>
+          {% endfor %}
+
+          <div class="col-12 col-md-8 icon-box">
+            <h4 class="title"><a href="">Videos - </a></h4>
+          </div>
+
+          {% for link in videos %}
+          <div class="col-12 col-md-8 icon-box">
+            <iframe width="420" height="240" src={{ link }}>
+            </iframe>
+          </div>
+
+          <div class="col-6 col-md-4 icon-box">
+            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
+            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
+            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
 
   <!-- Modal -->
-<!--   <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="card border-light mb-3" style="max-width: 20rem;">
+        <div class="card-header"><strong><i> Instructions</i></strong></div>
         <div class="card-body">
-          <p class="card-text">  <strong>Well done!</strong> You have successfully finished this material. <strong>Would you recommend this to a fellow learner?</strong></p>
-          <button type="button" class="btn btn-success btn-sm" id="yesbut" value="yes">Yes</button>
-          <button type="button" class="btn btn-danger btn-sm" id="nobut" value="no">No</button>
+          <p class="card-text">
+            <ul>
+              <li> jfjkafkaffksnfsnff</li>
+              <li> skhfuabfkanasnfsfnsf</li>
+              <li> kjjsfhiweafhawf</li>
+            </p>
+          <button type="button" class="btn btn-primary pull-right">Proceed</button>
         </div>
       </div>
     </div>
   </div>
- -->
+
 
   </section><!-- End Services Section -->
       <script>
               /*Stop Watch*/
               var i=1;
               function CounterStart(){
+                if (confirm("Your learning duration for this material will be noted. Begin now?")) {
                 interval=setInterval(function() {
                     i++;
                 },1000);
-                
+                }                
               }
               function CounterPause(){
+                if(confirm("This will pause the timer. Continue? (Press start to resume)")){
                 console.log(i);
           window.clearInterval(interval);
-            }
-
-
-            
-
-
-            function SendScore(value)
-            {
-              console.log("hello there")
-              // var score=value;
-              // $.ajax({
-              //   type:"POST",
-              //   url: "{% url 'write_to_csv' %}",
-              //   data: {
-              //     'score':score
-              //   },
-              //   dataType: 'json',
-              //   success: function (data) {
-              //       alert(data);
-              //   }
-              // });
+        }
             }
 
             function CounterEnd(subject,mode,level,username,unit){
@@ -329,20 +346,12 @@
               var username=username;
               var unit=unit;
               // var txt;
-              if (confirm("Would you recommend this to a fellow learner?")) {
+              if (confirm("Good job! You have completed this material in "+i/60+" minutes. Would you recommend this to a fellow learner?")) {
                 score = 1;
               } else {
                 score = -1;
               }
-              // console.log(txt);
-              // $('.myModal').find('button[id="yesbut"]').click(function(){
-              //   console.log("sup bro");
-              //   score=1;
-              // })
-              // $('.myModal').find('nobut').click(function(){
-              //   score=-1;
-              // })
-              // console.log(score);
+
               $.ajax({
                 type:"POST",
                 url: "{% url 'write_to_csv' %}",
@@ -355,10 +364,6 @@
                   'username':username,
                   'unit':unit
                 },
-                // dataType: 'json',
-                // success: function (data) {
-                //     alert(data);
-                // }
               }).done(function (data) {
                 if (data.success) {
                     window.location.href = data.url;
@@ -370,8 +375,6 @@
 
               /*End*/
             }
-
-
           
       </script>
 	<!-- password-script -->
