@@ -26,6 +26,7 @@
   <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -50,6 +51,11 @@
       color: red;
     }
 </style>
+    <script type="text/javascript">
+$(document).on('ready', function(){
+    $('#myModal').modal('show');
+});
+    </script>
 </head>
 
   <!-- ======= Header ======= -->
@@ -112,7 +118,7 @@
                   <li><button class="btn btn-link  btn-sm text-dark" onclick="CheckPrereq('{{ username }}','MM','Marketing Research and Trends in Marketing');">> Marketing Trends</button></li>
                 </ul>
               </li>
-              
+
               <li class="drop-down"><a href="#">Human Resource Management</a>
                 <ul>
                   <li><button class="btn btn-link  btn-sm text-dark" onclick="CheckPrereq('{{ username }}','HR','Perspectives');">> Perspectives</button></li>
@@ -135,26 +141,6 @@
 
 
   <!-- ======= Services Section ======= --> 
-    <section id="about" class="about">
-    <div class="container">
-
-      <div class="row no-gutters">
-
-        <div class="col-lg-12 d-flex flex-column justify-content-center about-content">
-
-          <div class="section-title">
-            <h2>Instructions</h2>
-            <ul>
-            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
-            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
-            <li><p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p></li>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
   
   <section id="about" class="about">
     <div class="container">
@@ -199,6 +185,24 @@
       </div>
     </div>
   </section><!-- End Services Section -->
+
+
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="card border-light mb-3" style="max-width: 20rem;">
+        <div class="card-header"><strong><i> Instructions</i></strong></div>
+        <div class="card-body">
+          <p class="card-text">
+            <ul>
+              <li> If your evaluation report is positive, you have successfully completed this Unit.</li>
+              <li> If it's negative, you will be redirected to the same unit to cover enough materials qualify to get evaluated again.</li>
+            </p>
+          <button type="button" class="btn btn-primary pull-right">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
 	<!-- password-script -->
 	<script type="text/javascript">
 		window.onload = function () {
