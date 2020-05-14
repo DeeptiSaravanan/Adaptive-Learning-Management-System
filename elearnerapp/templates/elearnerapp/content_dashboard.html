@@ -237,9 +237,9 @@ $(document).on('ready', function(){
             </div>
           </div>
           <div class="col-6 col-md-4 icon-box">
-            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart('tb1');">Start</button>
-            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="CounterStart('tb1');"><span class="fa fa-play fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();"><span class="fa fa-pause fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');"><span class="fa fa fa-check-square-o fa-lg" aria-hidden="true"></span></button>
           </div>
 
 
@@ -255,9 +255,9 @@ $(document).on('ready', function(){
           </div>
 
           <div class="col-6 col-md-4 icon-box">
-            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();">Pause</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="CounterStart();"><span class="fa fa-play fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-info btn-sm" onclick="CounterPause();"><span class="fa fa-pause fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="CounterEnd('{{ subject }}',0.6,'{{ level }}','{{ username }}','{{ unit }}');"><span class="fa fa fa-check-square-o fa-lg" aria-hidden="true"></span></button>
           </div>
           {% endfor %}
 
@@ -274,9 +274,9 @@ $(document).on('ready', function(){
           </div>
 
           <div class="col-6 col-md-4 icon-box">
-            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="CounterStart();"><span class="fa fa-play fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();"><span class="fa fa-pause fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.3,'{{ level }}','{{ username }}','{{ unit }}');"><span class="fa fa fa-check-square-o fa-lg" aria-hidden="true"></span></button>
           </div>
           {% endfor %}
 
@@ -291,9 +291,9 @@ $(document).on('ready', function(){
           </div>
 
           <div class="col-6 col-md-4 icon-box">
-            <button type="button" class="btn btn-success btn-sm" onclick="CounterStart();">Start</button>
-            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();">Pause</button>
-            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,'{{ level }}','{{ username }}','{{ unit }}');">Finish</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="CounterStart();"><span class="fa fa-play fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-info btn-sm"  onclick="CounterPause();"><span class="fa fa-pause fa-lg" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-danger btn-sm"  onclick="CounterEnd('{{ subject }}',0.1,'{{ level }}','{{ username }}','{{ unit }}');"><span class="fa fa fa-check-square-o fa-lg" aria-hidden="true"></span></button>
           </div>
           {% endfor %}
 
