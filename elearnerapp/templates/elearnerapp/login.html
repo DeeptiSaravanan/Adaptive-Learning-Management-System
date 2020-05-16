@@ -48,16 +48,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
   #bgimg {
-    width: 100%;
-    height: 100%;
-    background-image: url('{% static 'img/bgimg.png' %}');
-    background-size: 100% 100%;
+    background: url('{% static 'img/bgimg.png' %}') no-repeat center center fixed;
+
+    -webkit-background-size: cover;
+
+    -moz-background-size: cover;
+
+    -o-background-size: cover;
+
+    background-size: cover;
   }
   </style>
 </head>
 
   <!-- ======= Header ======= -->
-  <div id="bgimg">
+
   <header id="header">
     <div class="container">
       <div class="logo float-left">
@@ -69,17 +74,18 @@
     </div>
   </header><!-- End Header -->
 
+  <div id="bgimg">
     <div class="container">
       <form class="login-form" method="POST">
         {% csrf_token %}
         <div class="login-wrap">
-          <p class="login-img"><i class="icon_lock_alt"></i></p>
+          <p class="login-img" style='color:#00aeff;'><i class="icon_lock_alt"></i></p>
           <div class="input-group">
-            <span class="input-group-addon"><i class="icon_profile"></i></span>
+            <span class="input-group-addon" style='color:#00aeff;'><i class="icon_profile"></i></span>
             <input type="text" name="username"  class="form-control"  placeholder="Username" id="id_username">
           </div>
           <div class="input-group">
-            <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+            <span class="input-group-addon" style='color:#00aeff;'><i class="icon_key_alt"></i></span>
             <input type="password" name="password"  class="form-control"  placeholder="Password" id="id_password">
           </div>
           <label class="checkbox">
