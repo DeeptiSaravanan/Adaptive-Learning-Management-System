@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
-  <title>Home</title>
+  <title>Dashboard</title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
 
@@ -118,7 +118,7 @@ $(document).on('ready', function(){
     <div class="container">
 
       <div class="logo float-left">
-        <h1 class="text-light"><a href="index.html"><span>Chiron</span></a></h1>
+        <h1 class="text-light"><a href="#"><span>Chiron</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="{% static 'img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -127,7 +127,7 @@ $(document).on('ready', function(){
         <ul>
           <li class="active"><a href="#">Hi {{ username }} !<i class="la la-angle-down"></i></a></li>
           <!-- <li><a href="http://127.0.0.1:8000/elearner/{{ username }}/dashboard">Home</a></li> -->
-          <li><a href="http://127.0.0.1:8000/elearner/login">Logout</a></li>
+          <li><a href="http://chironlearner.herokuapp.com/">Logout</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -286,9 +286,14 @@ $(document).on('ready', function(){
 
           {% for link in videos %}
           <div class="col-12 col-md-8 icon-box">
-            <iframe width="420" height="240" src={{ link }}>
+            <iframe width="420" height="240" src={{ link }} allowfullscreen>
             </iframe>
           </div>
+
+<!--           <div class="col-lg-6 video-box">
+            <iframe src={{ link }}>
+            </iframe>
+          </div> -->
 
           <div class="col-6 col-md-4 icon-box">
             <button type="button" class="btn btn-secondary btn-sm" onclick="CounterStart();"><span class="fa fa-play fa-lg" aria-hidden="true"></span></button>
